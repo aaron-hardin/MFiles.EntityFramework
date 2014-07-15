@@ -212,3 +212,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+Packaging/tools/MFiles.EntityFramework.PowerShell.dll
+Packaging/lib/net45/MFiles.EntityFramework.dll
+Packaging/tools/MFiles.EntityFramework.PowerShell.Helper.dll
