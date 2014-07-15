@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MFilesEntityFramework</id>
+    <version>1.0.1.89</version>
+    <authors>Aaron</authors>
+    <owners>Aaron</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>It's like entity framework, but for M-Files</description>
+    <releaseNotes>Initial.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>M-Files</tags>
+    <dependencies>
+    </dependencies>
+	<references>
+      <reference file="testpkg.dll" />
+    </references>
+  </metadata>
+</package>
