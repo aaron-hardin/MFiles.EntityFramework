@@ -13,7 +13,7 @@
     <dependencies>
     </dependencies>
 	<references>
-      <reference file="testpkg.dll" />
+      <reference file="MFiles.EntityFramework.dll" />
     </references>
   </metadata>
 </package>

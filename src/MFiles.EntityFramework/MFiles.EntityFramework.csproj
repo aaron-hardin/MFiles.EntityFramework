@@ -7,8 +7,8 @@
     <ProjectGuid>{12F9E46E-EDF2-4466-9583-18FF1679775D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>testpkg</RootNamespace>
-    <AssemblyName>testpkg</AssemblyName>
+    <RootNamespace>MFiles.EntityFramework</RootNamespace>
+    <AssemblyName>MFiles.EntityFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
