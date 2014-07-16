@@ -22,17 +22,26 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string name, bool force, bool ignoreChanges)
 		{
-			if (System.Diagnostics.Debugger.IsAttached == false)
-				System.Diagnostics.Debugger.Launch();
-			
-			string text = ConfigurationManager.AppSettings["MFSetting"];
-			if(text == null)
-				WriteLine("Setting not found");
-			else
-				WriteLine("Setting: "+text);
+			//if (System.Diagnostics.Debugger.IsAttached == false)
+			//	System.Diagnostics.Debugger.Launch();
 
-			//ModelGenerator generator = new ModelGenerator(this, name, force);
-			//generator.Generate();
+			try
+			{
+				string text = ConfigurationManager.AppSettings["MFSetting"];
+				if (text == null)
+					WriteLine("Setting not found");
+				else
+					WriteLine("Setting: " + text);
+			}
+			catch (Exception)
+			{
+				
+				//throw;
+			}
+			
+
+			ModelGenerator generator = new ModelGenerator(this, name, force);
+			generator.Generate();
 
 			//if (System.Diagnostics.Debugger.IsAttached == false)
 			//	System.Diagnostics.Debugger.Launch();
