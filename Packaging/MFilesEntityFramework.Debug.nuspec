@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>MFilesEntityFramework</id>
-		<version>1.0.1.89</version>
+		<version>0.0.0.0</version>
 		<authors>Aaron</authors>
 		<owners>Aaron</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -17,8 +17,8 @@
 		</references>
 	</metadata>
 	<files>
-		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Release\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
-		<file src="..\src\MFiles.EntityFramework.Helper\bin\Release\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
-		<file src="..\src\MFiles.EntityFramework\bin\Release\MFiles.EntityFramework.dll" target="lib\net45"/>
+		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Debug\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework.Helper\bin\Debug\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework\bin\Debug\MFiles.EntityFramework.dll" target="lib\net45"/>
 	</files>
 </package>
