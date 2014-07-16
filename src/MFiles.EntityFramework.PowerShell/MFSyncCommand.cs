@@ -25,6 +25,8 @@ namespace MFiles.EntityFramework.PowerShell
 			//if (System.Diagnostics.Debugger.IsAttached == false)
 			//	System.Diagnostics.Debugger.Launch();
 
+			WriteWarning("gonna fail :(");
+
 			try
 			{
 				string text = ConfigurationManager.AppSettings["MFSetting"];
