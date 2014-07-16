@@ -1,19 +1,24 @@
 <?xml version="1.0"?>
 <package >
-  <metadata>
-    <id>MFilesEntityFramework</id>
-    <version>1.0.1.89</version>
-    <authors>Aaron</authors>
-    <owners>Aaron</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>It's like entity framework, but for M-Files</description>
-    <releaseNotes>Initial.</releaseNotes>
-    <copyright>Copyright 2014</copyright>
-    <tags>M-Files</tags>
-    <dependencies>
-    </dependencies>
-	<references>
-      <reference file="MFiles.EntityFramework.dll" />
-    </references>
-  </metadata>
+	<metadata>
+		<id>MFilesEntityFramework</id>
+		<version>1.0.1.89</version>
+		<authors>Aaron</authors>
+		<owners>Aaron</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>It's like entity framework, but for M-Files</description>
+		<releaseNotes>Initial.</releaseNotes>
+		<copyright>Copyright 2014</copyright>
+		<tags>M-Files</tags>
+		<dependencies>
+		</dependencies>
+		<references>
+			<reference file="MFiles.EntityFramework.dll" />
+		</references>
+	</metadata>
+	<files>
+		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Debug\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework.Helper\bin\Debug\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework\bin\Debug\MFiles.EntityFramework.dll" target="lib\net45"/>
+	</files>
 </package>
