@@ -94,12 +94,12 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
 	
 	Write-Verbose "Loading utility assembly."
 	
-    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath testpkg.PowerShell.dll))
+    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath MFiles.EntityFramework.PowerShell.Helper.dll))
     
 	Write-Verbose "Creating dispatcher."
 	
 	$dispatcher = $utilityAssembly.CreateInstance(
-        'testpkg.PowerShell.DomainDispatcher',
+        'MFiles.EntityFramework.PowerShell.Helper.DomainDispatcher',
         $false,
         [System.Reflection.BindingFlags]::Instance -bor [System.Reflection.BindingFlags]::Public,
         $null,

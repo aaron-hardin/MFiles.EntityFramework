@@ -20,7 +20,7 @@
 		<file src="Scripts\init.ps1" target="tools"/>
 		<file src="Scripts\MFilesEntityFramework.psm1" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Release\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
-		<file src="..\src\MFiles.EntityFramework.Helper\bin\Release\testpkg.PowerShell.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework.Helper\bin\Release\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework\bin\Release\MFiles.EntityFramework.dll" target="lib\net45"/>
 	</files>
 </package>
