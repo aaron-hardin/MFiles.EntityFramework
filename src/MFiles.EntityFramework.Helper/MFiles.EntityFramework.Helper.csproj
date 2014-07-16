@@ -7,8 +7,8 @@
     <ProjectGuid>{BC1FC5DD-E1AF-431A-A848-ABF333367ED3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFiles.EntityFramework.PowerShell.Helper</RootNamespace>
-    <AssemblyName>MFiles.EntityFramework.PowerShell.Helper</AssemblyName>
+    <RootNamespace>MFiles.EntityFramework.Helper</RootNamespace>
+    <AssemblyName>MFiles.EntityFramework.Helper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
