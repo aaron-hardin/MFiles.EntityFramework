@@ -26,8 +26,8 @@ namespace MFiles.EntityFramework.PowerShell
 
 			WriteLine("Setting: "+text);
 
-			ModelGenerator generator = new ModelGenerator(this, name, force);
-			generator.Generate();
+			//ModelGenerator generator = new ModelGenerator(this, name, force);
+			//generator.Generate();
 
 			//if (System.Diagnostics.Debugger.IsAttached == false)
 			//	System.Diagnostics.Debugger.Launch();
