@@ -91,9 +91,9 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
     $domain.SetData('connectionProviderName', $ConnectionProviderName)
     
     [AppDomain]::CurrentDomain.SetShadowCopyFiles()
-    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath MFiles.EntityFramework.PowerShell.Helper.dll))
+    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath MFiles.EntityFramework.Helper.dll))
     $dispatcher = $utilityAssembly.CreateInstance(
-        'MFiles.EntityFramework.PowerShell.Helper.DomainDispatcher',
+        'MFiles.EntityFramework.Helper.DomainDispatcher',
         $false,
         [System.Reflection.BindingFlags]::Instance -bor [System.Reflection.BindingFlags]::Public,
         $null,
