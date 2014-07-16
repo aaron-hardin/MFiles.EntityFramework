@@ -82,6 +82,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			ObjTypes valueLists = Vault.ValueListOperations.GetValueLists();
 			foreach (ObjType valueList in valueLists)
 			{
+				if (valueList.RealObjectType)
+					continue;
 				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, _vault);
 
 				if (vlGenerator.Exists)
@@ -118,6 +120,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 			foreach (ObjType valueList in valueLists)
 			{
+				if(valueList.RealObjectType)
+					continue;
 				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, _vault);
 				_project.AddFile(vlGenerator.FilePath, vlGenerator.GenerateValueListCode());
 			}
