@@ -98,6 +98,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 		public void Generate()
 		{
+			_command.WriteLine("Beginning generation.");
+
 			CreateBaseObjType();
 
 			ObjTypes objTypes = Vault.ObjectTypeOperations.GetObjectTypes();
@@ -105,6 +107,9 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			foreach (ObjType objType in objTypes)
 			{
 				ObjTypeGenerator otGenerator = new ObjTypeGenerator(objType, _project);
+				
+				_command.WriteLine(string.Format("Adding {0} to project.", otGenerator.FilePath));
+
 				_project.AddFile(otGenerator.FilePath, otGenerator.GenerateObjTypeCode());
 
 				ObjectClasses objectClasses = Vault.ClassOperations.GetObjectClasses(objType.ID);
@@ -112,6 +117,9 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				foreach (ObjectClass objectClass in objectClasses)
 				{
 					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, _vault, _command);
+
+					_command.WriteLine(string.Format("Adding {0} to project.", classGenerator.FilePath));
+
 					_project.AddFile(classGenerator.FilePath, classGenerator.GenerateClassCode());
 				}
 			}
@@ -123,6 +131,9 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				if(valueList.RealObjectType)
 					continue;
 				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, _vault);
+
+				_command.WriteLine(string.Format("Adding {0} to project.", vlGenerator.FilePath));
+
 				_project.AddFile(vlGenerator.FilePath, vlGenerator.GenerateValueListCode());
 			}
 		}
