@@ -134,7 +134,7 @@ function Invoke-RunnerCommand($runner, $command, $parameters, $anonymousArgument
 	}
 
     $domain.CreateInstanceFrom(
-        (Join-Path $runner.ToolsPath MFiles.EntityFramework.PowerShell.dll),
+        (Join-Path $runner.ToolsPath testpkg.PowerShell.dll),
         $command,
         $false,
         0,
