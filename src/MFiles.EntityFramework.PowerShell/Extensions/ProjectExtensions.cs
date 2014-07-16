@@ -10,6 +10,7 @@ using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using Microsoft.VisualStudio.Shell.Interop;
 using testpkg.PowerShell;
+using testpkg.PowerShell.Utilities;
 
 namespace MFiles.EntityFramework.PowerShell.Extensions
 {

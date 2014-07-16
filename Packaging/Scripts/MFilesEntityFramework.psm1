@@ -99,7 +99,7 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
 	Write-Verbose "Creating dispatcher."
 	
 	$dispatcher = $utilityAssembly.CreateInstance(
-        'testpkg.PowerShell.DomainDispatcher',
+        'testpkg.PowerShell.Utilities.DomainDispatcher',
         $false,
         [System.Reflection.BindingFlags]::Instance -bor [System.Reflection.BindingFlags]::Public,
         $null,

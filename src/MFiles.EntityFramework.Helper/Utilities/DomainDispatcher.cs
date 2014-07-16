@@ -5,7 +5,7 @@ using System;
 using System.Management.Automation;
 using EnvDTE;
 
-namespace testpkg.PowerShell
+namespace testpkg.PowerShell.Utilities
 {
 	public class DomainDispatcher : MarshalByRefObject
 	{
