@@ -2,6 +2,7 @@
 // See LICENSE.txt
 
 using System;
+using System.Configuration;
 using MFiles.EntityFramework.PowerShell.Utilities;
 
 namespace MFiles.EntityFramework.PowerShell
@@ -21,6 +22,10 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string name, bool force, bool ignoreChanges)
 		{
+			string text = ConfigurationManager.AppSettings["MFSetting"];
+
+			WriteLine("Setting: "+text);
+
 			ModelGenerator generator = new ModelGenerator(this, name, force);
 			generator.Generate();
 
