@@ -74,9 +74,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MFiles.EntityFramework.Helper\MFiles.EntityFramework.Helper.csproj">
+    <ProjectReference Include="..\MFiles.EntityFramework.Helper\testpkg.PowerShell.csproj">
       <Project>{bc1fc5dd-e1af-431a-a848-abf333367ed3}</Project>
-      <Name>MFiles.EntityFramework.Helper</Name>
+      <Name>testpkg.PowerShell</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
