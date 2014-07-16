@@ -91,8 +91,14 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
     $domain.SetData('connectionProviderName', $ConnectionProviderName)
     
     [AppDomain]::CurrentDomain.SetShadowCopyFiles()
+	
+	Write-Verbose "Loading utility assembly."
+	
     $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath MFiles.EntityFramework.Helper.dll))
-    $dispatcher = $utilityAssembly.CreateInstance(
+    
+	Write-Verbose "Creating dispatcher."
+	
+	$dispatcher = $utilityAssembly.CreateInstance(
         'MFiles.EntityFramework.Helper.DomainDispatcher',
         $false,
         [System.Reflection.BindingFlags]::Instance -bor [System.Reflection.BindingFlags]::Public,
@@ -100,6 +106,9 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
         $PSCmdlet,
         $null,
         $null)        
+		
+	Write-Verbose "Setting dispatcher on Domain."
+	
     $domain.SetData('efDispatcher', $dispatcher)
 
     return @{
