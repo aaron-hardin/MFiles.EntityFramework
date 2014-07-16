@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MFiles.EntityFramework.PowerShell\MFiles.EntityFramework.PowerShell.csproj">
+    <ProjectReference Include="..\MFiles.EntityFramework.PowerShell\testpkg.PowerShell.csproj">
       <Project>{1076a9be-245c-4eaa-a835-18debbd62624}</Project>
-      <Name>MFiles.EntityFramework.PowerShell</Name>
+      <Name>testpkg.PowerShell</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
