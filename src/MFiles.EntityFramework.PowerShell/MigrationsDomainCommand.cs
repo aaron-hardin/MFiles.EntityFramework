@@ -3,7 +3,7 @@
 
 using System;
 using EnvDTE;
-using testpkg.PowerShell;
+using MFiles.EntityFramework.PowerShell.Helper;
 
 namespace MFiles.EntityFramework.PowerShell
 {

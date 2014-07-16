@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFiles.EntityFramework.PowerShell", "MFiles.EntityFramework.PowerShell\MFiles.EntityFramework.PowerShell.csproj", "{1076A9BE-245C-4EAA-A835-18DEBBD62624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testpkg.PowerShell", "MFiles.EntityFramework.Helper\testpkg.PowerShell.csproj", "{BC1FC5DD-E1AF-431A-A848-ABF333367ED3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFiles.EntityFramework.Helper", "MFiles.EntityFramework.Helper\MFiles.EntityFramework.Helper.csproj", "{BC1FC5DD-E1AF-431A-A848-ABF333367ED3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFiles.EntityFramework", "MFiles.EntityFramework\MFiles.EntityFramework.csproj", "{12F9E46E-EDF2-4466-9583-18FF1679775D}"
 EndProject
