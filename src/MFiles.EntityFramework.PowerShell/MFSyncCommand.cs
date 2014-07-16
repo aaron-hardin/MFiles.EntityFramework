@@ -22,6 +22,9 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string name, bool force, bool ignoreChanges)
 		{
+			if (System.Diagnostics.Debugger.IsAttached == false)
+				System.Diagnostics.Debugger.Launch();
+			
 			string text = ConfigurationManager.AppSettings["MFSetting"];
 
 			WriteLine("Setting: "+text);
