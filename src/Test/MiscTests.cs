@@ -1,6 +1,6 @@
 ﻿using System;
-using MFiles.EntityFramework.PowerShell.Templates;
 using NUnit.Framework;
+using testpkg.PowerShell.Templates;
 
 namespace Test
 {

@@ -6,11 +6,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using EnvDTE;
-using MFiles.EntityFramework.PowerShell.Extensions;
 using MFilesAPI;
+using testpkg.PowerShell.Extensions;
 using CodeNamespace = System.CodeDom.CodeNamespace;
 
-namespace MFiles.EntityFramework.PowerShell.Utilities
+namespace testpkg.PowerShell.Utilities
 {
 	internal class ObjectClassGenerator
 	{

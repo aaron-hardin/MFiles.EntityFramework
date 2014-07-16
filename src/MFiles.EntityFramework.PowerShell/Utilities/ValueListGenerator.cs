@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using EnvDTE;
-using MFiles.EntityFramework.PowerShell.Extensions;
 using MFilesAPI;
+using testpkg.PowerShell.Extensions;
 
-namespace MFiles.EntityFramework.PowerShell.Utilities
+namespace testpkg.PowerShell.Utilities
 {
 	public class ValueListGenerator
 	{

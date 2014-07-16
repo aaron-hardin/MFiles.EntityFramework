@@ -3,10 +3,9 @@
 
 using System;
 using EnvDTE;
-using testpkg.PowerShell;
 using testpkg.PowerShell.Utilities;
 
-namespace MFiles.EntityFramework.PowerShell
+namespace testpkg.PowerShell
 {
 	internal abstract class MigrationsDomainCommand
 	{

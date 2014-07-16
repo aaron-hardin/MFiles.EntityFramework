@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NAMESPACE
+namespace testpkg.PowerShell.Templates
 {
 	public class ObjVerEx : IDisposable
 	{

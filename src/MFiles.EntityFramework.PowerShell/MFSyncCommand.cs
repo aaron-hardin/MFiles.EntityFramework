@@ -3,9 +3,9 @@
 
 using System;
 using System.Configuration;
-using MFiles.EntityFramework.PowerShell.Utilities;
+using testpkg.PowerShell.Utilities;
 
-namespace MFiles.EntityFramework.PowerShell
+namespace testpkg.PowerShell
 {
 	internal class MFSyncCommand : MigrationsDomainCommand
 	{
