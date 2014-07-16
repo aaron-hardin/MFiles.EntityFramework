@@ -94,7 +94,7 @@ function New-MigrationsRunner($ProjectName, $StartUpProjectName, $ConfigurationT
 	
 	Write-Verbose "Loading utility assembly."
 	
-    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath testpkg.PowerShell.Utility.dll))
+    $utilityAssembly = [System.Reflection.Assembly]::LoadFrom((Join-Path $toolsPath testpkg.PowerShell.dll))
     
 	Write-Verbose "Creating dispatcher."
 	

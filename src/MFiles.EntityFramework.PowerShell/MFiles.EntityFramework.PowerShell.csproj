@@ -7,8 +7,8 @@
     <ProjectGuid>{1076A9BE-245C-4EAA-A835-18DEBBD62624}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>testpkg.PowerShell</RootNamespace>
-    <AssemblyName>testpkg.PowerShell</AssemblyName>
+    <RootNamespace>MFiles.EntityFramework.PowerShell</RootNamespace>
+    <AssemblyName>MFiles.EntityFramework.PowerShell</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -74,9 +74,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MFiles.EntityFramework.Helper\testpkg.PowerShell.Utility.csproj">
+    <ProjectReference Include="..\MFiles.EntityFramework.Helper\testpkg.PowerShell.csproj">
       <Project>{bc1fc5dd-e1af-431a-a848-abf333367ed3}</Project>
-      <Name>testpkg.PowerShell.Utility</Name>
+      <Name>testpkg.PowerShell</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -19,8 +19,8 @@
 	<files>
 		<file src="Scripts\init.ps1" target="tools"/>
 		<file src="Scripts\MFilesEntityFramework.psm1" target="tools"/>
-		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Debug\testpkg.PowerShell.dll" target="tools"/>
-		<file src="..\src\MFiles.EntityFramework.Helper\bin\Debug\testpkg.PowerShell.Utility.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Debug\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
+		<file src="..\src\MFiles.EntityFramework.Helper\bin\Debug\testpkg.PowerShell.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework\bin\Debug\MFiles.EntityFramework.dll" target="lib\net45"/>
 	</files>
 </package>
