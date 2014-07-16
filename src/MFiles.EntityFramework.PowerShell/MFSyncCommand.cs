@@ -26,8 +26,10 @@ namespace MFiles.EntityFramework.PowerShell
 				System.Diagnostics.Debugger.Launch();
 			
 			string text = ConfigurationManager.AppSettings["MFSetting"];
-
-			WriteLine("Setting: "+text);
+			if(text == null)
+				WriteLine("Setting not found");
+			else
+				WriteLine("Setting: "+text);
 
 			//ModelGenerator generator = new ModelGenerator(this, name, force);
 			//generator.Generate();
