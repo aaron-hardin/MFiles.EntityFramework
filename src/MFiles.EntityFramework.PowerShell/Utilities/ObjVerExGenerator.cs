@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using EnvDTE;
-using testpkg.PowerShell.Extensions;
-using testpkg.PowerShell.Templates;
+using MFiles.EntityFramework.PowerShell.Extensions;
+using MFiles.EntityFramework.PowerShell.Templates;
 
-namespace testpkg.PowerShell.Utilities
+namespace MFiles.EntityFramework.PowerShell.Utilities
 {
 	public class ObjVerExGenerator
 	{

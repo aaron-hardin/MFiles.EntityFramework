@@ -27,7 +27,7 @@ function Sync-Initial
 
     try
     {
-        Invoke-RunnerCommand $runner testpkg.PowerShell.MFSyncCommand @( $Password, $Force.IsPresent, $IgnoreChanges.IsPresent )
+        Invoke-RunnerCommand $runner MFiles.EntityFramework.PowerShell.MFSyncCommand @( $Password, $Force.IsPresent, $IgnoreChanges.IsPresent )
         $error = Get-RunnerError $runner
         
         if ($error)

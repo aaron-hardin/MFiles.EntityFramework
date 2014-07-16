@@ -1,9 +1,9 @@
 ﻿using System;
 using EnvDTE;
+using MFiles.EntityFramework.PowerShell.Extensions;
 using MFilesAPI;
-using testpkg.PowerShell.Extensions;
 
-namespace testpkg.PowerShell.Utilities
+namespace MFiles.EntityFramework.PowerShell.Utilities
 {
 	internal class ModelGenerator
 	{

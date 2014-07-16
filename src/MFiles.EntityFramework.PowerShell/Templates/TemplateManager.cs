@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace testpkg.PowerShell.Templates
+namespace MFiles.EntityFramework.PowerShell.Templates
 {
 	public static class TemplateManager
 	{

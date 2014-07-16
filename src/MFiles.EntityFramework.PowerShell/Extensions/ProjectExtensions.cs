@@ -7,10 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using EnvDTE;
+using MFiles.EntityFramework.PowerShell.Utilities;
 using Microsoft.VisualStudio.Shell.Interop;
+using testpkg.PowerShell;
 using testpkg.PowerShell.Utilities;
 
-namespace testpkg.PowerShell.Extensions
+namespace MFiles.EntityFramework.PowerShell.Extensions
 {
 	internal static class ProjectExtensions
 	{

@@ -1,4 +1,4 @@
-﻿namespace testpkg.PowerShell.Utilities
+﻿namespace MFiles.EntityFramework.PowerShell.Utilities
 {
 	public class CodeGenerationHelpers
 	{

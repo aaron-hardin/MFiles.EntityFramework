@@ -5,7 +5,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
 
-namespace testpkg.PowerShell.Extensions
+namespace MFiles.EntityFramework.PowerShell.Extensions
 {
 	internal static class StringExtensions
 	{
