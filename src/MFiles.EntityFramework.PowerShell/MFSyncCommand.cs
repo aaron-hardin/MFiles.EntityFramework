@@ -40,7 +40,6 @@ namespace MFiles.EntityFramework.PowerShell
 				
 				//throw;
 			}
-			
 
 			ModelGenerator generator = new ModelGenerator(this, name, force);
 			generator.Generate();
