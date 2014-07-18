@@ -29,7 +29,7 @@ namespace MFiles.EntityFramework.PowerShell
 
 			try
 			{
-				string text = ConfigurationManager.AppSettings["MFSetting"];
+				string text = VaultConnector.GetSettings();
 				if (text == null)
 					WriteLine("Setting not found");
 				else
