@@ -78,6 +78,11 @@
       <Project>{bc1fc5dd-e1af-431a-a848-abf333367ed3}</Project>
       <Name>MFiles.EntityFramework.Helper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MFiles.EntityFramework\MFiles.EntityFramework.csproj">
+      <Project>{12f9e46e-edf2-4466-9583-18ff1679775d}</Project>
+      <Name>MFiles.EntityFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MFilesAPI">
