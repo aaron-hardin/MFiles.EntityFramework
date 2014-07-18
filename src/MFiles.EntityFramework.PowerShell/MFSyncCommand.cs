@@ -22,14 +22,14 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string name, bool force, bool ignoreChanges)
 		{
-			//if (System.Diagnostics.Debugger.IsAttached == false)
-			//	System.Diagnostics.Debugger.Launch();
+			if (System.Diagnostics.Debugger.IsAttached == false)
+				System.Diagnostics.Debugger.Launch();
 
 			WriteWarning("gonna fail :(");
 
 			try
 			{
-				string text = VaultConnector.GetSettings();
+				string text = ConfigurationManager.AppSettings["MFSetting"];//VaultConnector.GetSettings();
 				if (text == null)
 					WriteLine("Setting not found");
 				else
