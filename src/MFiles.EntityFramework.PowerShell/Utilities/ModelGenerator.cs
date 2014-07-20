@@ -1,6 +1,7 @@
 ﻿using System;
 using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Extensions;
+using MFiles.EntityFramework.PowerShell.Models;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell.Utilities
@@ -8,16 +9,16 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 	internal class ModelGenerator
 	{
 		private readonly Project _project;
-		private readonly string _password;
 		private readonly bool _force;
 		private readonly MigrationsDomainCommand _command;
+		private readonly VaultConnectionSettings _settings;
 		private Vault _vault;
 
-		public ModelGenerator(MigrationsDomainCommand command, string password, bool force)
+		public ModelGenerator(MigrationsDomainCommand command, VaultConnectionSettings settings, bool force)
 		{
 			_command = command;
 			_project = command.Project;
-			_password = password;
+			_settings = settings;
 			_force = force;
 
 			if (!IsValid())
@@ -29,17 +30,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 		private Vault Vault
 		{
-			get
-			{
-				if (_vault == null)
-				{
-					MFilesServerApplication server = new MFilesServerApplication();
-					server.Connect(MFAuthType.MFAuthTypeSpecificWindowsUser, "Administrator", _password, "aaronserver",
-						NetworkAddress: "aaronserver");
-					_vault = server.LogInToVault("{1B4F147E-FAC7-4E0F-80B7-D5340A15A5B2}");
-				}
-				return _vault;
-			}
+			get { return _vault ?? (_vault = _settings.GetServerVault()); }
 		}
 
 		public bool IsValid()
