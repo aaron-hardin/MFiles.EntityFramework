@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MFiles.QMS.Common;
-using MFiles.QMS.Extensions;
-using MFiles.QMS.TemplateManager;
 using MFilesAPI;
 using System.Text.RegularExpressions;
 
@@ -19,40 +16,12 @@ namespace NAMESPACE
 		private bool propertiesChanged = false;
 		private bool readOnly;
 
-		public ObjVerEx(bool readOnly = false)
-		{
-			this.readOnly = readOnly;
-			checkIn = !readOnly && StartRequireCheckedOut();
-		}
-
-		public bool StartRequireCheckedOut()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void EndRequireCheckedOut(bool checkIn)
-		{
-			throw new NotImplementedException();
-			if (readOnly)
-				return;
-
-			if (propertiesChanged)
-			{
-				//check in
-			}
-			else
-			{
-				//save properties
-			}
-		}
-
 		public void Dispose()
 		{
 			EndRequireCheckedOut(checkIn);
 		}
 
 		public virtual int ObjType { get; set; }
-
 
 		#region Public Properties
 
@@ -159,26 +128,22 @@ namespace NAMESPACE
 				props = value;
 			}
 		}
-
-
+		
 		/// <summary>
 		/// Returns the object's class ID.
 		/// </summary>
 		public int Class { get { return this.Info.Class; } }
-
-
+		
 		/// <summary>
 		/// Returns the object's workflow. -1 if not set.
 		/// </summary>
 		public int Workflow { get { return GetLookupID(MFBuiltInPropertyDef.MFBuiltInPropertyDefWorkflow); } }
-
-
+		
 		/// <summary>
 		/// Returns the object's state. -1 if not set.
 		/// </summary>
 		public int State { get { return GetLookupID(MFBuiltInPropertyDef.MFBuiltInPropertyDefState); } }
-
-
+		
 		/// <summary>
 		/// Indicates whether this object is an M-Files template.
 		/// </summary>
@@ -189,19 +154,7 @@ namespace NAMESPACE
 				return HasPropertyFlag((int)MFBuiltInPropertyDef.MFBuiltInPropertyDefIsTemplate);
 			}
 		}
-
-		/// <summary>
-		/// Indicates whether this object is an M-Files Record.
-		/// </summary>
-		public bool IsRecord
-		{
-			get
-			{
-				return HasPropertyFlag(QMS.Property.IsRecord);
-			}
-		}
-
-
+		
 		/// <summary>
 		/// Retreives the history of this object, with each version wrapped as an ObjVerEx object.
 		/// Also ensures the order of the object is from newest to oldest.
@@ -240,8 +193,7 @@ namespace NAMESPACE
 				return new ObjVerEx(this.Vault, old);
 			}
 		}
-
-
+		
 		/// <summary>
 		/// Determines if this version can be modified.
 		/// Specifically determines if this is the latest
@@ -259,8 +211,7 @@ namespace NAMESPACE
 					&& (!ov.ObjectCheckedOut || ov.ObjectCheckedOutToThisUser));
 			}
 		}
-
-
+		
 		/// <summary>
 		/// Returns this object version's permissions.
 		/// </summary>
@@ -296,8 +247,8 @@ namespace NAMESPACE
 		/// </summary>
 		/// <param name="vault">The vault where the M-Files object exists.</param>
 		/// <param name="versionInfo">ObjectVersion representing the M-Files object.</param>
-		public ObjVerEx(Vault vault, ObjectVersion versionInfo)
-			: this(vault, versionInfo.ObjVer)
+		public ObjVerEx(Vault vault, ObjectVersion versionInfo, bool checkOut = false)
+			: this(vault, versionInfo.ObjVer, checkOut)
 		{
 			info = versionInfo;
 		}
@@ -306,8 +257,8 @@ namespace NAMESPACE
 		/// Creates a new ObjVerEx Object from an ObjectVersionAndProperties object.
 		/// </summary>
 		/// <param name="ovap">ObjectVersionAndProperties representing the M-Files object.</param>
-		public ObjVerEx(ObjectVersionAndProperties ovap)
-			: this(ovap.Vault, ovap.ObjVer)
+		public ObjVerEx(ObjectVersionAndProperties ovap, bool checkOut = false)
+			: this(ovap.Vault, ovap.ObjVer, checkOut)
 		{
 			info = ovap.VersionData;
 			props = ovap.Properties;
@@ -318,8 +269,8 @@ namespace NAMESPACE
 		/// </summary>
 		/// <param name="vault">The vault where the M-Files object exists.</param>
 		/// <param name="versionInfo">ObjVer representing the M-Files object.</param>
-		public ObjVerEx(Vault vault, ObjVer objVer)
-			: this(vault, objVer.Type, objVer.ID, objVer.Version)
+		public ObjVerEx(Vault vault, ObjVer objVer, bool checkOut = false)
+			: this(vault, objVer.Type, objVer.ID, objVer.Version, checkOut)
 		{
 			this.Vault = vault;
 			this.ObjVer = objVer;
@@ -335,7 +286,7 @@ namespace NAMESPACE
 		/// <param name="objType">The object type of the M-Files object.</param>
 		/// <param name="id">The id of the M-Files object.</param>
 		/// <param name="version">The version of the M-Files object.</param>
-		public ObjVerEx(Vault vault, int objType, int id, int version)
+		public ObjVerEx(Vault vault, int objType, int id, int version, bool checkOut = false)
 		{
 			this.Vault = vault;
 			this.ObjVer = new ObjVer();
@@ -343,6 +294,11 @@ namespace NAMESPACE
 
 			if (version == -1)
 				loadLatestObjVer();
+
+			// If readOnly = false then check the object out on creation of ObjVerEx
+			if (checkOut)
+				checkIn = StartRequireCheckedOut();
+			readOnly = !checkOut;
 		}
 
 
@@ -351,73 +307,6 @@ namespace NAMESPACE
 		#region Public Methods
 
 	    /// <summary>
-	    /// This Method without optional paramaters will create a Copy of the ObjVerEx... With paramaters, it will create a modified Copy
-	    /// for use with the Template Manager Module
-	    /// </summary>
-	    /// <param name="isTemplate">bool flag for Is Template</param>
-	    /// <param name="templateMaster">GUID of the Master Template this Template is Being Copied From</param>
-	    /// <param name="ownerLookup">Lookup to Add in the Reverse Lookup Property</param>
-	    /// <param name="config">TemplateConfiguration for use with the Template Manager Module</param>
-	    /// <returns></returns>
-	    public ObjVerEx Copy(bool isTemplate = false, string templateMaster = null, Lookup ownerLookup = null, TemplateConfiguration config = null)
-		{
-            // check if the reverse lookup should be added
-			PropertyValues clonedProps;
-			if ( isTemplate )
-			{
-                int isMasterPropertyID = this.Vault.ResolveID(typeof(PropertyDef), Structure.PropertyDefs.IsMaster);
-                clonedProps = this.Properties.CopyTemplate(isMasterPropertyID);
-
-                #region Add the Master GUID
-                
-                int tplMasterPropID = this.Vault.ResolveID(typeof(PropertyDef), Structure.PropertyDefs.TemplateMaster);
-                PropertyValue tplMasterProp = new PropertyValue { PropertyDef = tplMasterPropID };
-                tplMasterProp.Value.SetValue(MFDataType.MFDatatypeText, templateMaster);
-                clonedProps.Add(-1, tplMasterProp);
-               
-                #endregion
-
-            }
-			else
-			{
-				clonedProps = this.Properties.Copy();
-            }
-
-            #region Handle Single File Doc Templates
-
-            int id;
-	        if (GetProperty((int) MFBuiltInPropertyDef.MFBuiltInPropertyDefSingleFileObject).Value.Value == true)
-	        {
-                // extract the file
-	            ObjectFile file = Info.Files[1];
-                
-                // save it to the filesystem
-                List<string> houseKeeper = new List<string>();
-	            string savePath = Toolbelt.TempFilename(file.Extension);
-                file.Download(Vault, savePath);
-                houseKeeper.Add(savePath);
-                Debug.Print("#WORKINGCOPY - " + savePath);
-                // create a new list of sourcefile
-	            SourceObjectFiles sourceFiles = new SourceObjectFiles
-	            {
-	                {-1, new SourceObjectFile { SourceFilePath = savePath, Extension = file.Extension, Title = this.Title } }
-	            };
-
-                // create the single file object
-                id = Vault.ObjectOperations.CreateNewObjectExQuick(Type, clonedProps, sourceFiles, true, true);
-	        }
-	        else
-	        {
-                // create the multi file object
-                id = Vault.ObjectOperations.CreateNewObjectExQuick(Type, clonedProps, new SourceObjectFiles(), false, true);
-	        }
-
-            #endregion
-
-			return new ObjVerEx(this.Vault, this.Type, id, -1);
-		}
-
-		/// <summary>
 		/// Checks if the passed object type reference matches this object.
 		/// </summary>
 		/// <param name="objType">A reference to an objType.</param>
@@ -460,8 +349,7 @@ namespace NAMESPACE
 			int id = this.Vault.ResolveID(typeof(PropertyDef), prop);
 			return this.Properties.HasValue(id);
 		}
-
-
+		
 		/// <summary>
 		/// Checks whether an object has a specific boolean property and it is true.
 		/// </summary>
@@ -758,8 +646,7 @@ namespace NAMESPACE
 			int itemID = this.Vault.ResolveItem(item).ID;
 			return this.Properties.RemoveLookup(propID, itemID);
 		}
-
-
+		
 		/// <summary>
 		/// Sets workflow and state values for the object.
 		/// </summary>
@@ -768,7 +655,7 @@ namespace NAMESPACE
 		public void SetWorkflowState(object workflow = null, object state = null)
 		{
 			if (workflow == null && state == null)
-				throw new ArgumentException(QMS.Exception.BothArgsNull);
+				throw new ArgumentException("SetWorkflowState called with now workflow or state.");
 
 			int wf = -1;
 			int s = -1;
@@ -930,8 +817,7 @@ namespace NAMESPACE
 			propVals.Add(-1, pv);
 			update(this.Vault.ObjectPropertyOperations.SetProperties(this.ObjVer, propVals));
 		}
-
-
+		
 		/// <summary>
 		/// Saves all properties as they currently are set, or the ones passed.
 		/// </summary>
@@ -1006,8 +892,7 @@ namespace NAMESPACE
 		{
 			update(this.Vault.ObjectOperations.CheckOut(this.ObjID));
 		}
-
-
+		
 		/// <summary>
 		/// Checks in the object. 
 		/// </summary>
@@ -1043,7 +928,7 @@ namespace NAMESPACE
 		public void AssertCheckedOut()
 		{
 			if (!this.Info.ObjectCheckedOut)
-				throw new Exception(QMS.Exception.ObjectNotCheckedOut);
+				throw new Exception("Object is checked out.");
 		}
 		
 		/// <summary>
@@ -1082,8 +967,19 @@ namespace NAMESPACE
 		/// <param name="user">The modified by user to be set when checking in the object.</param>
 		public void EndRequireCheckedOut(bool start, int user = -1)
 		{
-			if (start)
+			if (readOnly)
+				return;
+
+			if (start && propertiesChanged)
+			{
+				//check in
 				this.CheckIn("", user);
+			}
+			else if (propertiesChanged)
+			{
+				//save properties
+				this.SaveProperties();
+			}
 		}
 
 		/// <summary>

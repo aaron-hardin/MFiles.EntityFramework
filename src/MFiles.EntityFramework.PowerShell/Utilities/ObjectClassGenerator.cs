@@ -85,32 +85,36 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 		{
 			foreach (AssociatedPropertyDef associatedPropertyDef in _objectClass.AssociatedPropertyDefs)
 			{
-				PropertyDef pdef = _vault.PropertyDefOperations.GetPropertyDef(associatedPropertyDef.PropertyDef);
+				PropertyDefAdmin pdefAdmin = _vault.PropertyDefOperations.GetPropertyDefAdmin(associatedPropertyDef.PropertyDef);
 
 				// Skip Automatic Values.
 				// TODO: handle certain ones?
-				if(pdef.AutomaticValueType != MFAutomaticValueType.MFAutomaticValueTypeNone)
+				if(pdefAdmin.PropertyDef.AutomaticValueType != MFAutomaticValueType.MFAutomaticValueTypeNone)
 					continue;
 
 				// Ignore the built in properties, those should be handled on a lower level (and for specific ones only).
-				if(pdef.ID < 101 && pdef.ID > 0)
+				if(pdefAdmin.PropertyDef.ID < 101 && pdefAdmin.PropertyDef.ID > 0)
 					continue;
 
 				CodeMemberProperty property = new CodeMemberProperty
 				{
 					Attributes = MemberAttributes.Public | MemberAttributes.Final,
-					Name = pdef.Name.CleanName()
+					Name = pdefAdmin.PropertyDef.Name.CleanName()
 				};
-				property.Comments.Add(new CodeCommentStatement(string.Format("Binding property for {0}.", pdef.Name)));
+				property.Comments.Add(new CodeCommentStatement(string.Format("Binding property for {0}.", pdefAdmin.PropertyDef.Name)));
 
-				switch (pdef.DataType)
+				string getParam = pdefAdmin.PropertyDef.GUID;
+				if (!string.IsNullOrWhiteSpace(pdefAdmin.SemanticAliases.Value))
+					getParam = pdefAdmin.SemanticAliases.Value.Split(';')[0];
+
+				switch (pdefAdmin.PropertyDef.DataType)
 				{
 					case MFDataType.MFDatatypeMultiLineText:
 					case MFDataType.MFDatatypeText:
 						property.Type = new CodeTypeReference(typeof (string));
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetPropertyText({0})", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
@@ -118,7 +122,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						property.Type = new CodeTypeReference(typeof (DateTime));
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
@@ -126,7 +130,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						property.Type = new CodeTypeReference(typeof(bool));
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
@@ -134,7 +138,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						property.Type = new CodeTypeReference(typeof(int));
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
@@ -142,12 +146,12 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						property.Type = new CodeTypeReference(typeof(float));
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeLookup:
-						ObjType objType = _vault.ObjectTypeOperations.GetObjectType(pdef.ValueList);
+						ObjType objType = _vault.ObjectTypeOperations.GetObjectType(pdefAdmin.PropertyDef.ValueList);
 						if (!objType.RealObjectType)
 						{
 							//_command.WriteWarning("Value lists not yet supported.");
@@ -160,12 +164,12 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						}
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeMultiSelectLookup:
-						ObjType objTypeMulti = _vault.ObjectTypeOperations.GetObjectType(pdef.ValueList);
+						ObjType objTypeMulti = _vault.ObjectTypeOperations.GetObjectType(pdefAdmin.PropertyDef.ValueList);
 						if (!objTypeMulti.RealObjectType)
 						{
 							//_command.WriteWarning("Value lists not yet supported.");
@@ -178,13 +182,13 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 						}
 						property.GetStatements.Add(new CodeMethodReturnStatement(
 							new CodeFieldReferenceExpression(
-								new CodeThisReferenceExpression(), "GetProperty()")));
+								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					default:
 						//throw new NotImplementedException(string.Format("Generation of datatype {0} not yet supported.", pdef.DataType));
-						_command.WriteWarning(string.Format("Generation of datatype {0} not yet supported.", pdef.DataType));
+						_command.WriteWarning(string.Format("Generation of datatype {0} not yet supported.", pdefAdmin.PropertyDef.DataType));
 						break;
 				}
 
