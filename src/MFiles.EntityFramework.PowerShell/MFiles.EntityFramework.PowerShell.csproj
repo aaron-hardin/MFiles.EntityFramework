@@ -59,6 +59,8 @@
     <Compile Include="Extensions\ProjectExtensions.cs" />
     <Compile Include="MFSyncCommand.cs" />
     <Compile Include="MigrationsDomainCommand.cs" />
+    <Compile Include="Models\ProtocolSequence.cs" />
+    <Compile Include="Models\VaultConnectionSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ValueListGenerator.cs" />
     <EmbeddedResource Include="Templates\ObjVerEx.cs" />
