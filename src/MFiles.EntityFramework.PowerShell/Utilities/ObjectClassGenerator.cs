@@ -117,6 +117,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetPropertyText({0})", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeDate:
@@ -125,6 +127,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeBoolean:
@@ -133,6 +137,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeInteger:
@@ -151,6 +157,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeLookup:
@@ -169,6 +177,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeMultiSelectLookup:
@@ -187,6 +197,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + pdefAdmin.PropertyDef.DataType)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					default:
