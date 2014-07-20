@@ -57,6 +57,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 
 			AddProperties(targetClass);
+			AddConstructors(targetClass);
 
 			CodeNamespace targetNamespace = new CodeNamespace(_project.GetModelNamespace());
 			targetNamespace.Types.Add(targetClass);
