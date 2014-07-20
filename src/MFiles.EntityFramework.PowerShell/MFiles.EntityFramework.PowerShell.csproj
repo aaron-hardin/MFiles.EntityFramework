@@ -67,6 +67,7 @@
     <EmbeddedResource Include="Templates\MFUtils.cs" />
     <EmbeddedResource Include="Templates\PropertyValuesExtensionMethods.cs" />
     <EmbeddedResource Include="Templates\VaultExtensionMethods.cs" />
+    <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\ValueListGenerator.cs" />
     <EmbeddedResource Include="Templates\ObjVerEx.cs" />
     <Compile Include="Templates\TemplateManager.cs" />
