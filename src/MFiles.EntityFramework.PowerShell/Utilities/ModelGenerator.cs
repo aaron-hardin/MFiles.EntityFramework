@@ -135,7 +135,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			ObjVerExGenerator baseGenerator = new ObjVerExGenerator(_project);
 			_project.AddFile(ObjVerExGenerator.FilePath, baseGenerator.GenerateBaseObjTypeCode());
 
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("LokupsExtensionMethods.cs", _project.GetModelNamespace()));
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("LookupsExtensionMethods.cs", _project.GetModelNamespace()));
 			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFIdentifier.cs", _project.GetModelNamespace()));
 			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFUtils.cs", _project.GetModelNamespace()));
 			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("PropertyValuesExtensionMethods.cs", _project.GetModelNamespace()));
