@@ -572,33 +572,6 @@ namespace NAMESPACE
 			return this.Properties.AddLookup(propID, itemID);
 		}
 
-		public bool AddToLookups(object prop, Lookup item)
-		{
-			// resolve property
-			int propID = this.Vault.ResolveID(typeof(PropertyDef), prop);
-
-			// determine is single select or multi-select
-			switch (this.Vault.PropertyDefOperations.GetPropertyDef(propID).DataType)
-			{
-				case MFDataType.MFDatatypeLookup:
-					return this.Properties.AddLookup(propID, item.ToObjVer(this.Vault));
-				case MFDataType.MFDatatypeMultiSelectLookup:
-					{
-						// create a PropertyValue
-						PropertyValue propVal = new PropertyValue { PropertyDef = propID };
-
-						Lookups lookups;
-						lookups = this.HasValue(propID) ? this.GetLookups(propID) : new Lookups();
-						lookups.Add(-1, item);
-
-						propVal.Value.SetValueToMultiSelectLookup(lookups);
-						this.Properties.SetProperty(propVal);
-					}
-					break;
-			}
-			return true;
-		}
-
 		public bool AddToLookups(object prop, Lookups items)
 		{
 			// resolve property
@@ -1087,7 +1060,7 @@ namespace NAMESPACE
 
 				// Throw an error if a single file wasn't passed.
 				if (files.Count != 1)
-					throw new InvalidOperationException(String.Format(QMS.Exception.WrongFileCount, files.Count));
+					throw new InvalidOperationException(String.Format("Wrong number files, expected 1. Value: {0}", files.Count));
 
 				// Replace the existing file with the one passed.
 				FileVer file = this.Info.Files[1].FileVer;
