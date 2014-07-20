@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
@@ -135,11 +136,16 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			ObjVerExGenerator baseGenerator = new ObjVerExGenerator(_project);
 			_project.AddFile(ObjVerExGenerator.FilePath, baseGenerator.GenerateBaseObjTypeCode());
 
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("LookupsExtensionMethods.cs", _project.GetModelNamespace()));
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFIdentifier.cs", _project.GetModelNamespace()));
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFUtils.cs", _project.GetModelNamespace()));
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("PropertyValuesExtensionMethods.cs", _project.GetModelNamespace()));
-			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("VaultExtensionMethods.cs", _project.GetModelNamespace()));
+			List<string> templates = new List<string>
+			{
+				"LookupsExtensionMethods.cs",
+				"MFIdentifier.cs",
+				"MFUtils.cs",
+				"PropertyValuesExtensionMethods.cs",
+				"VaultExtensionMethods.cs"
+			};
+
+			TemplateManager.GenerateTemplates(templates, _project);
 		}
 	}
 }

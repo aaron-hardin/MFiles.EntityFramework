@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using EnvDTE;
+using MFiles.EntityFramework.PowerShell.Extensions;
 
 namespace MFiles.EntityFramework.PowerShell.Templates
 {
@@ -26,6 +29,16 @@ namespace MFiles.EntityFramework.PowerShell.Templates
 		{
 			string code = ReadTemplate(name);
 			return code.Replace("NAMESPACE", @namespace);
+		}
+
+		public static void GenerateTemplates(List<string> templates, Project project)
+		{
+			const string basepath = "Models";
+			foreach (string template in templates)
+			{
+				string path = Path.Combine(basepath, template);
+				project.AddFile(path, ReadTemplate(template, project.GetModelNamespace()));
+			}
 		}
 	}
 }
