@@ -106,6 +106,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				string getParam = pdefAdmin.PropertyDef.GUID;
 				if (!string.IsNullOrWhiteSpace(pdefAdmin.SemanticAliases.Value))
 					getParam = pdefAdmin.SemanticAliases.Value.Split(';')[0];
+				getParam = "\"" + getParam + "\"";
 
 				switch (pdefAdmin.PropertyDef.DataType)
 				{
@@ -140,6 +141,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 							new CodeFieldReferenceExpression(
 								new CodeThisReferenceExpression(), string.Format("GetProperty({0}).Value.Value", getParam))));
 						property.SetStatements.Add(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "SetProperty",
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression(getParam)),
+							new CodeDirectionExpression(FieldDirection.In, new CodeArgumentReferenceExpression("MFDataType." + MFDataType.MFDatatypeInteger)),
 							new CodePropertySetValueReferenceExpression()));
 						break;
 					case MFDataType.MFDatatypeFloating:
