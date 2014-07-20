@@ -2,7 +2,7 @@
 using MFilesAPI;
 using System.Runtime.Serialization;
 
-namespace MFiles.QMS
+namespace NAMESPACE
 {
 	/// <summary>
 	/// Identification object type, that can be set to string and int.

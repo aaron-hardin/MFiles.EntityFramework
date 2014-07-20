@@ -62,6 +62,11 @@
     <Compile Include="Models\ProtocolSequence.cs" />
     <Compile Include="Models\VaultConnectionSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Templates\LookupsExtensionMethods.cs" />
+    <EmbeddedResource Include="Templates\MFIdentifier.cs" />
+    <EmbeddedResource Include="Templates\MFUtils.cs" />
+    <EmbeddedResource Include="Templates\PropertyValuesExtensionMethods.cs" />
+    <EmbeddedResource Include="Templates\VaultExtensionMethods.cs" />
     <Compile Include="Utilities\ValueListGenerator.cs" />
     <EmbeddedResource Include="Templates\ObjVerEx.cs" />
     <Compile Include="Templates\TemplateManager.cs" />

@@ -21,5 +21,11 @@ namespace MFiles.EntityFramework.PowerShell.Templates
 				}
 			}
 		}
+
+		public static string ReadTemplate(string name, string @namespace)
+		{
+			string code = ReadTemplate(name);
+			return code.Replace("NAMESPACE", @namespace);
+		}
 	}
 }

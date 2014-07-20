@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MFiles.QMS.VaultExtensions;
+using NAMESPACE;
 using MFilesAPI;
 
-namespace MFiles.QMS
+namespace NAMESPACE
 {
 	/// <summary>
 	/// Convenience methods for Vault objects.
@@ -75,27 +75,7 @@ namespace MFiles.QMS
 			}
 
 		};
-
-	    public static int ResolveID(this Vault vault, object reference, StructureType type = StructureType.Property)
-	    {
-	        switch (type)
-	        {
-                case StructureType.Object:
-	                return ResolveID(vault, typeof (ObjType), reference);
-                case StructureType.Class:
-                    return ResolveID(vault, typeof(ObjectClass), reference);
-                case StructureType.Property:
-                    return ResolveID(vault, typeof(PropertyDef), reference);
-                case StructureType.Workflow:
-                    return ResolveID(vault, typeof(Workflow), reference);
-                case StructureType.WFState:
-                    return ResolveID(vault, typeof(State), reference);
-	        }
-
-	        return -1;
-	    }
-
-
+		
 	    /// <summary>
 		/// Resolves the id of a vault element by reference.
 		/// </summary>

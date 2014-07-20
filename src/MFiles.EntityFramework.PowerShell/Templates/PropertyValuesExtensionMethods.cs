@@ -2,7 +2,7 @@
 using System.Text;
 using MFilesAPI;
 
-namespace MFiles.QMS
+namespace NAMESPACE
 {
 
 	/// <summary>

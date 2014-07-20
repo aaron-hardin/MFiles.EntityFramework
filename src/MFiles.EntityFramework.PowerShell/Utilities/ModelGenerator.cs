@@ -2,6 +2,7 @@
 using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
+using MFiles.EntityFramework.PowerShell.Templates;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell.Utilities
@@ -133,6 +134,12 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 		{
 			ObjVerExGenerator baseGenerator = new ObjVerExGenerator(_project);
 			_project.AddFile(ObjVerExGenerator.FilePath, baseGenerator.GenerateBaseObjTypeCode());
+
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("LokupsExtensionMethods.cs", _project.GetModelNamespace()));
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFIdentifier.cs", _project.GetModelNamespace()));
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("MFUtils.cs", _project.GetModelNamespace()));
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("PropertyValuesExtensionMethods.cs", _project.GetModelNamespace()));
+			_project.AddFile(ObjVerExGenerator.FilePath, TemplateManager.ReadTemplate("VaultExtensionMethods.cs", _project.GetModelNamespace()));
 		}
 	}
 }

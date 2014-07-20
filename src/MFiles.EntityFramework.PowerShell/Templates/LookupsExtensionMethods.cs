@@ -1,6 +1,6 @@
 ﻿using MFilesAPI;
 
-namespace MFiles.QMS
+namespace NAMESPACE
 {
 	/// <summary>
 	/// Defines convenience methods for the Lookups interface.

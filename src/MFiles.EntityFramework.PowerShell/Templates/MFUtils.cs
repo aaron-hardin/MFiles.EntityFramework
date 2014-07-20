@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using MFilesAPI;
 
-namespace MFiles.QMS
+namespace NAMESPACE
 {
 
 	/// <summary>
