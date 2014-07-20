@@ -15,6 +15,9 @@
 		<references>
 			<reference file="MFiles.EntityFramework.dll" />
 		</references>
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System.Runtime.Serialization" targetFramework="net45" />
+		</frameworkAssemblies>
 	</metadata>
 	<files>
 		<file src="Scripts\init.ps1" target="tools"/>

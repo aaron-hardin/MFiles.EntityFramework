@@ -149,7 +149,7 @@ namespace NAMESPACE
 			}
 
 			// We couldn't resolve anything. Throw an exception.
-			throw new ArgumentException(String.Format(QMS.Exception.IdentifierNotRecognized, reference.ToString()));
+			throw new ArgumentException(String.Format("Identifier not recognized. {0}", reference.ToString()));
 
 		}
 
