@@ -18,6 +18,8 @@ namespace NAMESPACE
 
 		public void Dispose()
 		{
+			if (propertiesChanged)
+				SaveProperties();
 			EndRequireCheckedOut(checkIn);
 		}
 
