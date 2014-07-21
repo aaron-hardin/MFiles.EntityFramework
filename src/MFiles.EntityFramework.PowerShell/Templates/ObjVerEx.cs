@@ -460,8 +460,7 @@ namespace NAMESPACE
             return new Lookup();
 
         }
-
-
+		
 		/// <summary>
 		/// Returns the property's value as a lookups collection.
 		/// </summary>
@@ -489,8 +488,7 @@ namespace NAMESPACE
 			int id = this.Vault.ResolveID(typeof(PropertyDef), prop);
 			return this.Properties.TryGetProperty(id, out propVal);
 		}
-
-
+		
 		/// <summary>
 		/// Adds or updates the specified PropertyValue in the PropertyValue collection.
 		/// </summary>
@@ -509,6 +507,7 @@ namespace NAMESPACE
 				dataType = pd.DataType;
 			}
 
+			propertiesChanged = true;
 			return this.Properties.SetProperty(id, dataType, value);
 		}
 
@@ -519,6 +518,7 @@ namespace NAMESPACE
 		/// <returns>The actual ProperyValue added to the object.</returns>
 		public PropertyValue SetProperty(PropertyValue propVal)
 		{
+			propertiesChanged = true;
 			return this.Properties.SetProperty(propVal);
 		}
 
@@ -569,6 +569,7 @@ namespace NAMESPACE
 		{
 			int propID = this.Vault.ResolveID(typeof(PropertyDef), prop);
 			int itemID = this.Vault.ResolveItem(item).ID;
+			propertiesChanged = true;
 			return this.Properties.AddLookup(propID, itemID);
 		}
 
@@ -588,10 +589,11 @@ namespace NAMESPACE
 					PropertyValue propVal = new PropertyValue { PropertyDef = propID };
 					propVal.Value.SetValueToMultiSelectLookup(items);
 					this.Properties.SetProperty(propVal);
+					propertiesChanged = true;
 					return true;
 				}
 			}
-			return false;;
+			return false;
 		}
 
 		/// <summary>
@@ -604,6 +606,7 @@ namespace NAMESPACE
 		public bool AddLookup(object prop, ObjVer item, bool exactVersion = false)
 		{
 			int propID = this.Vault.ResolveID(typeof(PropertyDef), prop);
+			propertiesChanged = true;
 			return this.Properties.AddLookup(propID, item, exactVersion);
 		}
 
@@ -617,6 +620,7 @@ namespace NAMESPACE
 		{
 			int propID = this.Vault.ResolveID(typeof(PropertyDef), prop);
 			int itemID = this.Vault.ResolveItem(item).ID;
+			propertiesChanged = true;
 			return this.Properties.RemoveLookup(propID, itemID);
 		}
 		
@@ -1178,8 +1182,7 @@ namespace NAMESPACE
 			return expandedText;
 
 		}
-
-
+		
 		/// <summary>
 		/// Returns a string representation of the object version.
 		/// </summary>
@@ -1203,8 +1206,7 @@ namespace NAMESPACE
 			else
 				return idString;
 		}
-
-
+		
 		/// <summary>
 		/// Overrides hashcode method for efficient use in HashSets.
 		/// </summary>
