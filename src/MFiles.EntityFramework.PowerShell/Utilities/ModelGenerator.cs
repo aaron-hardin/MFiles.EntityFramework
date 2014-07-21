@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
@@ -113,7 +115,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 					_command.WriteLine(string.Format("Adding {0} to project.", classGenerator.FilePath));
 
-					_project.AddFile(classGenerator.FilePath, classGenerator.GenerateClassCode());
+					_project.AddFile(classGenerator.PartialsFilePath, classGenerator.GenerateClassCode());
+					_project.AddFile(classGenerator.FilePath, classGenerator.GenerateClassCode(true));
 				}
 			}
 

@@ -30,7 +30,6 @@ namespace MFiles.EntityFramework.PowerShell
 			//	System.Diagnostics.Debugger.Launch();
 
 			VaultConnectionSettings connectionSettings = null;
-			KeyValueConfigurationCollection settings = null;
 
 			try
 			{
@@ -38,7 +37,7 @@ namespace MFiles.EntityFramework.PowerShell
 				AssemblyName assemblyName = AssemblyName.GetAssemblyName(path);
 				Assembly assembly = Assembly.Load(assemblyName);
 				Configuration config = ConfigurationManager.OpenExeConfiguration(assembly.Location);
-				settings = config.AppSettings.Settings;
+				KeyValueConfigurationCollection settings = config.AppSettings.Settings;
 
 				int authType = LoadAuthType(settings);
 

@@ -43,25 +43,33 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			get { return Path.Combine("Models", _objectClass.Name.CleanName() + ".cs"); }
 		}
 
-		public string GenerateClassCode()
+		public string PartialsFilePath
+		{
+			get { return Path.Combine("Models\\Partials", _objectClass.Name.CleanName() + ".cs"); }
+		}
+
+		public string GenerateClassCode(bool emptyPartial = false)
 		{
 			CodeTypeDeclaration targetClass = new CodeTypeDeclaration(_objectClass.Name.CleanName())
 			{
 				IsClass = true,
+				IsPartial = true,
 				TypeAttributes = TypeAttributes.Public
 			};
 			targetClass.BaseTypes.Add("OT_"+_objType.NameSingular.CleanName());
 
-			// Declare a new generated code attribute
-			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
-			targetClass.CustomAttributes.Add(codeAttrDecl);
+			if (!emptyPartial)
+			{
+				// Declare a new generated code attribute
+				CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
+				targetClass.CustomAttributes.Add(codeAttrDecl);
 
-			AddProperties(targetClass);
-			Common.AddConstructors(targetClass);
-
+				AddProperties(targetClass);
+				Common.AddConstructors(targetClass);
+			}
 			CodeNamespace targetNamespace = new CodeNamespace(_project.GetModelNamespace());
 			targetNamespace.Types.Add(targetClass);
-
+			
 			StringBuilder sbCode = new StringBuilder();
 			using (StringWriter sw = new StringWriter(sbCode))
 			{
