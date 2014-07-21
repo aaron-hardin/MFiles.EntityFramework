@@ -33,7 +33,7 @@ namespace MFiles.EntityFramework.PowerShell.Templates
 
 		public static void GenerateTemplates(List<string> templates, Project project)
 		{
-			const string basepath = "Models";
+			const string basepath = "Models\\Extensions";
 			foreach (string template in templates)
 			{
 				string path = Path.Combine(basepath, template);

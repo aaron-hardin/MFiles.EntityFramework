@@ -32,7 +32,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 		public string FilePath
 		{
-			get { return Path.Combine("Models", "OT_"+_objType.NameSingular.CleanName() + ".cs"); }
+			get { return Path.Combine("Models\\BaseTypes", "OT_"+_objType.NameSingular.CleanName() + ".cs"); }
 		}
 
 		public string GenerateObjTypeCode()
