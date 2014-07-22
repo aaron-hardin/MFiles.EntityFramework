@@ -3,8 +3,11 @@ using MFiles.EntityFramework.PowerShell.Models;
 
 namespace MFiles.EntityFramework.PowerShell
 {
-	class MFDiffCommand : MigrationsDomainCommand
+	internal class MFDiffCommand : MigrationsDomainCommand
 	{
+		public MFDiffCommand()
+		{ }
+
 		public MFDiffCommand(int mode)
 		{
 			MFDiffCommand migrationCommand = this;
