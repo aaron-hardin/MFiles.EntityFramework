@@ -48,7 +48,7 @@ namespace MFiles.EntityFramework.PowerShell
 					LoadDomain(settings), LoadAddress(settings), LoadProtocol(settings), LoadPort(settings));
 
 				string jsonPath = Path.Combine("Models", "Vault.json");
-				if (!force && !File.Exists(jsonPath))
+				if (!force && File.Exists(jsonPath))
 				{
 					WriteWarning("JSON file exists, use -Force to overwrite.");
 					return;
