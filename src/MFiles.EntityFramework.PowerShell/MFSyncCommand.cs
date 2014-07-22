@@ -29,8 +29,8 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string password, bool force, bool ignoreChanges)
 		{
-			//if (System.Diagnostics.Debugger.IsAttached == false)
-			//	System.Diagnostics.Debugger.Launch();
+			if (System.Diagnostics.Debugger.IsAttached == false)
+				System.Diagnostics.Debugger.Launch();
 
 			VaultConnectionSettings connectionSettings = null;
 
@@ -57,10 +57,10 @@ namespace MFiles.EntityFramework.PowerShell
 				string json = StructureGenerator.VaultToJson(vault);
 				Project.AddFile(jsonPath, json);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				connectionSettings = null;
-				WriteWarning("Settings could not be loaded.");
+				WriteWarning("Settings could not be loaded.\n"+e);
 			}
 
 			if (connectionSettings == null)
