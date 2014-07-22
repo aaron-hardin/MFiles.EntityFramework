@@ -25,6 +25,7 @@
 		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Release\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework.Helper\bin\Release\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
 		<file src="..\src\redist\MFiles.TestSuite.dll" target="tools"/>
+		<file src="..\src\redist\Newtonsoft.Json.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework\bin\Release\MFiles.EntityFramework.dll" target="lib\net45"/>
 	</files>
 </package>
