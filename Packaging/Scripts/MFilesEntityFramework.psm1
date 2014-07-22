@@ -2,6 +2,44 @@
 
 $InitialDatabase = '0'
 
+function Get-Diff
+{
+	[CmdletBinding(DefaultParameterSetName = 'ConnectionStringName')]
+    param (
+        [parameter(Position = 0,
+            Mandatory = $true)]
+        [string] $DiffMode,
+        [string] $ProjectName,
+        [string] $StartUpProjectName,
+        [string] $ConfigurationTypeName,
+        [parameter(ParameterSetName = 'ConnectionStringName')]
+        [string] $ConnectionStringName,
+        [parameter(ParameterSetName = 'ConnectionStringAndProviderName',
+            Mandatory = $true)]
+        [string] $ConnectionString,
+        [parameter(ParameterSetName = 'ConnectionStringAndProviderName',
+            Mandatory = $true)]
+        [string] $ConnectionProviderName)
+
+    $runner = New-MigrationsRunner $ProjectName $StartUpProjectName $ConfigurationTypeName $ConnectionStringName $ConnectionString $ConnectionProviderName
+
+    try
+    {
+        Invoke-RunnerCommand $runner MFiles.EntityFramework.PowerShell.MFDiffCommand @( $DiffMode )
+        $error = Get-RunnerError $runner
+        
+        if ($error)
+        {
+            Write-Host $error.StackTrace
+            throw $error.Message
+        }
+    }
+    finally
+    {
+        Remove-Runner $runner
+    }
+}
+
 function Sync-Initial
 {
     [CmdletBinding(DefaultParameterSetName = 'ConnectionStringName')]
@@ -335,4 +373,4 @@ function Get-PackageInstallPath($package)
     return $vsPackage.InstallPath
 }
 
-Export-ModuleMember @( 'Sync-Initial' ) -Variable InitialDatabase
+Export-ModuleMember @( 'Sync-Initial', 'Get-Diff' ) -Variable InitialDatabase
