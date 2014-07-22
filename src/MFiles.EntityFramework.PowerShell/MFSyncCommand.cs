@@ -5,8 +5,11 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
+using MFiles.TestSuite;
+using MFiles.TestSuite.ComModels;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell
@@ -43,6 +46,16 @@ namespace MFiles.EntityFramework.PowerShell
 
 				connectionSettings = new VaultConnectionSettings(authType, LoadUsername(settings), password, LoadVaultGuid(settings),
 					LoadDomain(settings), LoadAddress(settings), LoadProtocol(settings), LoadPort(settings));
+
+				string jsonPath = Path.Combine("Models", "Vault.json");
+				if (!force && !File.Exists(jsonPath))
+				{
+					WriteWarning("JSON file exists, use -Force to overwrite.");
+					return;
+				}
+				Vault vault = connectionSettings.GetServerVault();
+				string json = StructureGenerator.VaultToJson(vault);
+				Project.AddFile(jsonPath, json);
 			}
 			catch (Exception)
 			{
