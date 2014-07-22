@@ -9,111 +9,93 @@ namespace MFiles.EntityFramework.PowerShell
 {
 	internal abstract class MigrationsDomainCommand
 	{
-	
-    private readonly AppDomain _domain;
-    private readonly DomainDispatcher _dispatcher;
 
-    public virtual Project Project
-    {
-      get
-      {
-        return (Project) _domain.GetData("project");
-      }
-    }
+		private readonly AppDomain _domain;
+		private readonly DomainDispatcher _dispatcher;
 
-    public Project StartUpProject
-    {
-      get
-      {
-        return (Project) _domain.GetData("startUpProject");
-      }
-    }
+		public virtual Project Project
+		{
+			get { return (Project) _domain.GetData("project"); }
+		}
 
-    public Project ContextProject
-    {
-      get
-      {
-        return (Project) _domain.GetData("contextProject");
-      }
-    }
+		public Project StartUpProject
+		{
+			get { return (Project) _domain.GetData("startUpProject"); }
+		}
 
-    public string ContextAssemblyName
-    {
-      get
-      {
-        return (string) _domain.GetData("contextAssemblyName");
-      }
-    }
+		public Project ContextProject
+		{
+			get { return (Project) _domain.GetData("contextProject"); }
+		}
 
-    public string AppDomainBaseDirectory
-    {
-      get
-      {
-        return (string) _domain.GetData("appDomainBaseDirectory");
-      }
-    }
+		public string ContextAssemblyName
+		{
+			get { return (string) _domain.GetData("contextAssemblyName"); }
+		}
 
-    protected AppDomain Domain
-    {
-      get
-      {
-        return _domain;
-      }
-    }
+		public string AppDomainBaseDirectory
+		{
+			get { return (string) _domain.GetData("appDomainBaseDirectory"); }
+		}
 
-    protected MigrationsDomainCommand()
-    {
-      _domain = AppDomain.CurrentDomain;
-      _dispatcher = (DomainDispatcher) _domain.GetData("efDispatcher");
-    }
+		protected AppDomain Domain
+		{
+			get { return _domain; }
+		}
 
-    public void Execute(Action command)
-    {
-      Init();
-      try
-      {
-        command();
-      }
-      catch (Exception ex)
-      {
-        Throw(ex);
-      }
-    }
+		protected MigrationsDomainCommand()
+		{
+			_domain = AppDomain.CurrentDomain;
+			_dispatcher = (DomainDispatcher) _domain.GetData("efDispatcher");
+		}
 
-    public virtual void WriteLine(string message)
-    {
-      _dispatcher.WriteLine(message);
-    }
+		public void Execute(Action command)
+		{
+			Init();
+			try
+			{
+				command();
+			}
+			catch (Exception ex)
+			{
+				Throw(ex);
+			}
+		}
 
-    public virtual void WriteWarning(string message)
-    {
-      _dispatcher.WriteWarning(message);
-    }
+		public virtual void WriteLine(string message)
+		{
+			_dispatcher.WriteLine(message);
+		}
 
-    public void WriteVerbose(string message)
-    {
-      _dispatcher.WriteVerbose(message);
-    }
+		public virtual void WriteWarning(string message)
+		{
+			_dispatcher.WriteWarning(message);
+		}
 
-    public T GetAnonymousArgument<T>(string name)
-    {
-      return (T) _domain.GetData(name);
-    }
+		public void WriteVerbose(string message)
+		{
+			_dispatcher.WriteVerbose(message);
+		}
 
-    private void Init()
-    {
-      _domain.SetData("wasError", false);
-      _domain.SetData("error.Message", null);
-      _domain.SetData("error.TypeName", null);
-      _domain.SetData("error.StackTrace", null);
-    }
+		public T GetAnonymousArgument<T>(string name)
+		{
+			return (T) _domain.GetData(name);
+		}
 
-    private void Throw(Exception ex)
-    {
-      _domain.SetData("wasError", true);
-      _domain.SetData("error.Message", ex.Message);
-      _domain.SetData("error.TypeName", ex.GetType().FullName);
-      _domain.SetData("error.StackTrace", ex.ToString());
-    }
-  }
+		private void Init()
+		{
+			_domain.SetData("wasError", false);
+			_domain.SetData("error.Message", null);
+			_domain.SetData("error.TypeName", null);
+			_domain.SetData("error.StackTrace", null);
+		}
+
+		private void Throw(Exception ex)
+		{
+			_domain.SetData("wasError", true);
+			_domain.SetData("error.Message", ex.Message);
+			_domain.SetData("error.TypeName", ex.GetType().FullName);
+			_domain.SetData("error.StackTrace", ex.ToString());
+		}
+	}
 }
