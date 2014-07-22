@@ -8,7 +8,7 @@ function Get-Diff
     param (
         [parameter(Position = 0,
             Mandatory = $true)]
-        [string] $DiffMode,
+        [int] $DiffMode,
         [string] $ProjectName,
         [string] $StartUpProjectName,
         [string] $ConfigurationTypeName,
