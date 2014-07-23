@@ -9,6 +9,9 @@ function Get-Diff
         [parameter(Position = 0,
             Mandatory = $true)]
         [int] $DiffMode,
+		[parameter(Position = 1,
+            Mandatory = $true)]
+		[string] $Password,
         [string] $ProjectName,
         [string] $StartUpProjectName,
         [string] $ConfigurationTypeName,
@@ -25,7 +28,7 @@ function Get-Diff
 
     try
     {
-        Invoke-RunnerCommand $runner MFiles.EntityFramework.PowerShell.MFDiffCommand @( $DiffMode )
+        Invoke-RunnerCommand $runner MFiles.EntityFramework.PowerShell.MFDiffCommand @( $DiffMode, $Password )
         $error = Get-RunnerError $runner
         
         if ($error)
