@@ -28,20 +28,14 @@ namespace MFiles.EntityFramework.PowerShell
 		[STAThread]
 		public void Execute(string password, bool force, bool ignoreChanges)
 		{
-			if (System.Diagnostics.Debugger.IsAttached == false)
-				System.Diagnostics.Debugger.Launch();
+			//if (System.Diagnostics.Debugger.IsAttached == false)
+			//	System.Diagnostics.Debugger.Launch();
 
 			VaultConnectionSettings connectionSettings;
 
 			try
 			{
-				string path = GetAssemblyPath(Project);
-				AssemblyName assemblyName = AssemblyName.GetAssemblyName(path);
-				Assembly assembly = Assembly.Load(assemblyName);
-				Configuration config = ConfigurationManager.OpenExeConfiguration(assembly.Location);
-				KeyValueConfigurationCollection settings = config.AppSettings.Settings;
-
-				connectionSettings = settings.LoadConnectionSettings(password);
+				connectionSettings = SettingsLoader.LoadConnectionSettings(Project, password);
 
 				string jsonPath = Path.Combine("Models", "Vault.json");
 				if (!force && File.Exists(jsonPath))
@@ -63,16 +57,6 @@ namespace MFiles.EntityFramework.PowerShell
 				return;
 			ModelGenerator generator = new ModelGenerator(this, connectionSettings, force);
 			generator.Generate();
-		}
-
-		static string GetAssemblyPath(EnvDTE.Project vsProject)
-		{
-			string fullPath = vsProject.Properties.Item("FullPath").Value.ToString();
-			string outputPath = vsProject.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
-			string outputDir = Path.Combine(fullPath, outputPath);
-			string outputFileName = vsProject.Properties.Item("OutputFileName").Value.ToString();
-			string assemblyPath = Path.Combine(outputDir, outputFileName);
-			return assemblyPath;
 		}
 	}
 }

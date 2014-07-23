@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
+using System.Reflection;
+using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Models;
+using Configuration = System.Configuration.Configuration;
+using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace MFiles.EntityFramework.PowerShell.Utilities
 {
-	static class SettingLoader
+	public static class SettingsLoader
 	{
-		public static VaultConnectionSettings LoadConnectionSettings(this KeyValueConfigurationCollection settings, string password)
+		public static VaultConnectionSettings LoadConnectionSettings(Project project, string password)
+		{
+			string path = GetAssemblyPath(project);
+			AssemblyName assemblyName = AssemblyName.GetAssemblyName(path);
+			Assembly assembly = Assembly.Load(assemblyName);
+			Configuration config = ConfigurationManager.OpenExeConfiguration(assembly.Location);
+			KeyValueConfigurationCollection settings = config.AppSettings.Settings;
+
+			return settings.LoadConnectionSettings(password);
+		}
+
+		private static VaultConnectionSettings LoadConnectionSettings(this KeyValueConfigurationCollection settings, string password)
 		{
 			return new VaultConnectionSettings(settings.LoadAuthType(), settings.LoadUsername(), password, settings.LoadVaultGuid(),
 					settings.LoadDomain(), settings.LoadAddress(), settings.LoadProtocol(), settings.LoadPort());
@@ -82,6 +98,16 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 		private static string LoadSetting(this KeyValueConfigurationCollection settings, string settingName)
 		{
 			return settings[settingName] != null ? settings[settingName].Value : null;
+		}
+
+		private static string GetAssemblyPath(Project vsProject)
+		{
+			string fullPath = vsProject.Properties.Item("FullPath").Value.ToString();
+			string outputPath = vsProject.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
+			string outputDir = Path.Combine(fullPath, outputPath);
+			string outputFileName = vsProject.Properties.Item("OutputFileName").Value.ToString();
+			string assemblyPath = Path.Combine(outputDir, outputFileName);
+			return assemblyPath;
 		}
 	}
 }
