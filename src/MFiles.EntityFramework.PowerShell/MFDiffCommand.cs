@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using MFiles.TestSuite;
@@ -52,16 +51,19 @@ namespace MFiles.EntityFramework.PowerShell
 			switch (diffMode)
 			{
 				case DiffMode.ServerAndLocal:
-					Vault vault = connectionSettings.GetServerVault();
-					string json = StructureGenerator.VaultToJson(vault);
-					string localJson = File.ReadAllText(jsonPath);
-					if (json != localJson)
+					if (connectionSettings != null)
 					{
-						WriteLine("Changes...");
-					}
-					else
-					{
-						WriteLine("No changes.");
+						Vault vault = connectionSettings.GetServerVault();
+						string json = StructureGenerator.VaultToJson(vault);
+						string localJson = File.ReadAllText(jsonPath);
+						if (json != localJson)
+						{
+							WriteLine("Changes...");
+						}
+						else
+						{
+							WriteLine("No changes.");
+						}
 					}
 					WriteWarning("Functionality not completed.");
 					break;

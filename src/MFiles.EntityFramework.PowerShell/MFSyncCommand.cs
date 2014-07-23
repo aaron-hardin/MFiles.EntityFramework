@@ -2,9 +2,7 @@
 // See LICENSE.txt
 
 using System;
-using System.Configuration;
 using System.IO;
-using System.Reflection;
 using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
