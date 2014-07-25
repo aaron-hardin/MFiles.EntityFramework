@@ -72,6 +72,7 @@
     <EmbeddedResource Include="Templates\MFUtils.cs" />
     <EmbeddedResource Include="Templates\PropertyValuesExtensionMethods.cs" />
     <EmbeddedResource Include="Templates\VaultExtensionMethods.cs" />
+    <Compile Include="Utilities\PropertyDefGenerator.cs" />
     <Compile Include="Utilities\SettingsLoader.cs" />
     <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\IGenerator.cs" />
