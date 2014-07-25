@@ -105,11 +105,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			CreateBaseObjType();
 
 			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault);
-			if (pdefGenerator.Exists)
-			{
-				_command.WriteLine(string.Format("Adding {0} to project.", pdefGenerator.FilePath));
-				_project.AddFile(pdefGenerator.FilePath, pdefGenerator.GenerateCode());
-			}
+			_command.WriteLine(string.Format("Adding {0} to project.", pdefGenerator.FilePath));
+			_project.AddFile(pdefGenerator.FilePath, pdefGenerator.GenerateCode());
 
 			ObjTypes objTypes = Vault.ObjectTypeOperations.GetObjectTypes();
 
