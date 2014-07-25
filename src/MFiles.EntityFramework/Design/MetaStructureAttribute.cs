@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using MFilesAPI;
 
-namespace testpkg.Design
+namespace MFiles.EntityFramework.Design
 {
 	/// <summary>
 	/// Allows parameters to be given information for generating as structure.

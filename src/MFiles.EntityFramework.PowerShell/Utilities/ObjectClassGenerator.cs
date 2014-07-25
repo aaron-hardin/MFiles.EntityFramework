@@ -79,7 +79,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				provider.GenerateCodeFromNamespace(targetNamespace, sw, options);
 			}
 
-			string[] namespaces = { "System", "MFilesAPI", "testpkg.Design", "System.Collections.Generic" };
+			string[] namespaces = { "System", "MFilesAPI", "MFiles.EntityFramework.Design", "System.Collections.Generic" };
 			string usingSt = namespaces.Aggregate("", (current, ns) => current + string.Format("using {0};\r\n", ns));
 
 			string code = string.Format("{0}\r\n{1}", usingSt, sbCode);

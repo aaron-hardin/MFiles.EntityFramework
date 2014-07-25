@@ -1,7 +1,7 @@
 ﻿using System;
 using MFilesAPI;
 
-namespace testpkg.Design
+namespace MFiles.EntityFramework.Design
 {
 	public class VaultHelpers
 	{
