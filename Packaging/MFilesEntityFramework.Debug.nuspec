@@ -24,6 +24,8 @@
 		<file src="Scripts\MFilesEntityFramework.psm1" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework.PowerShell\bin\Debug\MFiles.EntityFramework.PowerShell.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework.Helper\bin\Debug\MFiles.EntityFramework.PowerShell.Helper.dll" target="tools"/>
+		<file src="..\src\packages\MFiles.TestSuite.*\lib\net45\MFiles.TestSuite.dll" target="tools"/>
+		<file src="..\src\redist\Newtonsoft.Json.dll" target="tools"/>
 		<file src="..\src\MFiles.EntityFramework\bin\Debug\MFiles.EntityFramework.dll" target="lib\net45"/>
 	</files>
 </package>
