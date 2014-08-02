@@ -101,7 +101,7 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 				if (element.Name == "test")
 				{
-					WriteElements(element.Children, level + 1);
+					WriteElements(element.Collection, level + 1);
 				}
 			}
 		}
