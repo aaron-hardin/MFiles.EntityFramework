@@ -50,10 +50,12 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 			}
 
+			WriteLine("Getting elements");
 			CodeElements elements = Project.CodeModel.CodeElements;
 
 			foreach (CodeElement element in Project.CodeModel.CodeElements)
 			{
+				WriteLine(string.Format("{0}: {1}", element.Kind, element.Name));
 				if (element.Kind == vsCMElement.vsCMElementClass)
 				{
 					CodeClass myClass = (CodeClass)element;
