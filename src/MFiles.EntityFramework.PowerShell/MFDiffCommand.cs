@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using EnvDTE;
+using MFiles.EntityFramework.Design;
 using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
-using MFiles.TestSuite;
 using MFiles.VaultJsonTools;
 using MFilesAPI;
 
@@ -60,6 +60,11 @@ namespace MFiles.EntityFramework.PowerShell
 			foreach (Type type in types)
 			{
 				WriteLine(type.ToString());
+				MetaStructureClassAttribute attr = type.GetCustomAttribute<MetaStructureClassAttribute>();
+				if (attr != null)
+				{
+					WriteLine("\tName: " + attr.Name);
+				}
 			}
 
 			//ProjectUtilities.WriteElements(Project, Project.CodeModel.CodeElements, WriteLine);
