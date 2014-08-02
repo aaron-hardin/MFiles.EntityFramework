@@ -99,7 +99,7 @@ namespace MFiles.EntityFramework.PowerShell
 					// do stuff with that class here
 					WriteLine("Class: "+myClass.FullName);
 				}
-				if (element.Name == "test")
+				if (element.Kind == vsCMElement.vsCMElementNamespace)
 				{
 					CodeNamespace cnm = element as CodeNamespace;
 					if (cnm == null)
