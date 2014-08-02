@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using MFiles.TestSuite;
@@ -48,6 +49,10 @@ namespace MFiles.EntityFramework.PowerShell
 					return;
 				}
 			}
+
+			if (System.Diagnostics.Debugger.IsAttached == false)
+				System.Diagnostics.Debugger.Launch();
+			CodeElements elements = Project.CodeModel.CodeElements;
 
 			switch (diffMode)
 			{
