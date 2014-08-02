@@ -87,26 +87,22 @@ namespace MFiles.EntityFramework.PowerShell
 			WriteLine("Getting elements");
 			foreach (CodeElement element in elements)
 			{
-				//string tabs = "";
-				//for (int i = 0; i < level; ++i)
-				//{
-				//	tabs += "\t";
-				//}
-				WriteLine(string.Format("{0}: {1}", element.Kind, element.Name));
+				string tabs = "";
+				for (int i = 0; i < level; ++i)
+				{
+					tabs += "\t";
+				}
+				WriteLine(string.Format("{0}{1}: {2}", tabs, element.Kind, element.Name));
 				if (element.Kind == vsCMElement.vsCMElementClass)
 				{
 					CodeClass myClass = (CodeClass)element;
 					// do stuff with that class here
-					WriteLine("Class: "+myClass.FullName);
+					WriteLine(tabs+"Class: "+myClass.FullName);
 				}
 				if (element.Kind == vsCMElement.vsCMElementNamespace)
 				{
-					CodeNamespace cnm = element as CodeNamespace;
-					if (cnm == null)
-					{
-						WriteWarning("Not a namespace.");
-						return;
-					}
+					CodeNamespace cnm = (CodeNamespace)element;
+					
 					WriteElements(cnm.Members, level + 1);
 				}
 			}
