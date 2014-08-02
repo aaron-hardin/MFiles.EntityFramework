@@ -45,7 +45,7 @@ namespace MFiles.EntityFramework.PowerShell
 			{
 				if (!File.Exists(jsonPath))
 				{
-					WriteWarning("JSON file does not exist.");
+					WriteWarning("JSON file does not exist. Path: "+jsonPath);
 					return;
 				}
 			}
@@ -85,7 +85,7 @@ namespace MFiles.EntityFramework.PowerShell
 
 		private void WriteElements(CodeElements elements, int level = 0)
 		{
-			foreach (CodeElement element in Project.CodeModel.CodeElements)
+			foreach (CodeElement element in elements)
 			{
 				string tabs = "";
 				for (int i = 0; i < level; ++i)
@@ -93,15 +93,15 @@ namespace MFiles.EntityFramework.PowerShell
 					tabs += "\t";
 				}
 				WriteLine(string.Format("{0}{1}: {2}", tabs, element.Kind, element.Name));
-				if (element.Name == "test")
-				{
-					WriteElements(element.Children, level+1);
-				}
 				if (element.Kind == vsCMElement.vsCMElementClass)
 				{
 					CodeClass myClass = (CodeClass)element;
 					// do stuff with that class here
-					WriteLine(myClass.FullName);
+					WriteLine("Class: "+myClass.FullName);
+				}
+				if (element.Name == "test")
+				{
+					WriteElements(element.Children, level + 1);
 				}
 			}
 		}
