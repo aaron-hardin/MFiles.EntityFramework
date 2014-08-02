@@ -50,9 +50,17 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 			}
 
-			if (System.Diagnostics.Debugger.IsAttached == false)
-				System.Diagnostics.Debugger.Launch();
 			CodeElements elements = Project.CodeModel.CodeElements;
+
+			foreach (CodeElement element in Project.CodeModel.CodeElements)
+			{
+				if (element.Kind == vsCMElement.vsCMElementClass)
+				{
+					CodeClass myClass = (CodeClass)element;
+					// do stuff with that class here
+					WriteLine(myClass.FullName);
+				}
+			}
 
 			switch (diffMode)
 			{
