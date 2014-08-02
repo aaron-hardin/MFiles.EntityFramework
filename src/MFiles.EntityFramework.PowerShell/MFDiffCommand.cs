@@ -51,18 +51,7 @@ namespace MFiles.EntityFramework.PowerShell
 			}
 
 			WriteLine("Getting elements");
-			CodeElements elements = Project.CodeModel.CodeElements;
-
-			foreach (CodeElement element in Project.CodeModel.CodeElements)
-			{
-				WriteLine(string.Format("{0}: {1}", element.Kind, element.Name));
-				if (element.Kind == vsCMElement.vsCMElementClass)
-				{
-					CodeClass myClass = (CodeClass)element;
-					// do stuff with that class here
-					WriteLine(myClass.FullName);
-				}
-			}
+			WriteElements(Project.CodeModel.CodeElements);
 
 			switch (diffMode)
 			{
@@ -91,6 +80,29 @@ namespace MFiles.EntityFramework.PowerShell
 					break;
 				default:
 					throw new NotImplementedException("DiffMode not implemented.");
+			}
+		}
+
+		private void WriteElements(CodeElements elements, int level = 0)
+		{
+			foreach (CodeElement element in Project.CodeModel.CodeElements)
+			{
+				string tabs = "";
+				for (int i = 0; i < level; ++i)
+				{
+					tabs += "\t";
+				}
+				WriteLine(string.Format("{0}{1}: {2}", tabs, element.Kind, element.Name));
+				if (element.Name == "test")
+				{
+					WriteElements(element.Children, level+1);
+				}
+				if (element.Kind == vsCMElement.vsCMElementClass)
+				{
+					CodeClass myClass = (CodeClass)element;
+					// do stuff with that class here
+					WriteLine(myClass.FullName);
+				}
 			}
 		}
 	}
