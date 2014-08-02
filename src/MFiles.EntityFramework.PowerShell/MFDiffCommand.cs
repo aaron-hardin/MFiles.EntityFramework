@@ -101,7 +101,13 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 				if (element.Name == "test")
 				{
-					WriteElements(element.Children, level + 1);
+					CodeNamespace cnm = element as CodeNamespace;
+					if (cnm == null)
+					{
+						WriteWarning("Not a namespace.");
+						return;
+					}
+					WriteElements(cnm.Members, level + 1);
 				}
 			}
 		}
