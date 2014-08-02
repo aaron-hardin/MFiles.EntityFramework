@@ -101,7 +101,9 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 				if (element.Kind == vsCMElement.vsCMElementNamespace)
 				{
-					if(element.Name != Project.Name)
+					bool myProject = element.Name == Project.Name;
+					
+					if(myProject == false && level == 0)
 						continue;
 					CodeNamespace cnm = (CodeNamespace)element;
 					
