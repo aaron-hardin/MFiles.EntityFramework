@@ -62,6 +62,8 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			{
 				// Declare a new generated code attribute
 				CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
+				CodeAttributeArgument argument = new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(_objectClass.Name));
+				codeAttrDecl.Arguments.Add(argument);
 				targetClass.CustomAttributes.Add(codeAttrDecl);
 
 				AddProperties(targetClass);

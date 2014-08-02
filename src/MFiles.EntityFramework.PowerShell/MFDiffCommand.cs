@@ -9,6 +9,7 @@ using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using MFiles.VaultJsonTools;
+using MFiles.VaultJsonTools.ComModels;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell
@@ -57,13 +58,25 @@ namespace MFiles.EntityFramework.PowerShell
 			Assembly assembly = Assembly.LoadFile(GetProjectExecutable(Project));
 			WriteLine(assembly.FullName);
 			List<Type> types = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract).ToList();
+			List<xObjectClassAdmin> classes = new List<xObjectClassAdmin>();
 			foreach (Type type in types)
 			{
 				WriteLine(type.ToString());
 				MetaStructureClassAttribute attr = type.GetCustomAttribute<MetaStructureClassAttribute>();
 				if (attr != null)
 				{
-					WriteLine("\tName: " + attr.Name);
+					string className = attr.Name;
+					if (string.IsNullOrWhiteSpace(className))
+					{
+						className = type.ToString().Split('.').Last();
+					}
+					WriteLine("\tName: " + className);
+					
+					xObjectClassAdmin metaClass = new xObjectClassAdmin
+					{
+						Name = className
+					};
+					classes.Add(metaClass);
 				}
 			}
 
