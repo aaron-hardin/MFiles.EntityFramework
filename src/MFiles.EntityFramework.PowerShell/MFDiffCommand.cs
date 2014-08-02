@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using EnvDTE;
+using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using MFiles.TestSuite;
@@ -50,7 +54,15 @@ namespace MFiles.EntityFramework.PowerShell
 				}
 			}
 
-			WriteElements(Project.CodeModel.CodeElements);
+			Assembly assembly = Assembly.LoadFile(GetProjectExecutable(Project));
+			WriteLine(assembly.FullName);
+			List<Type> types = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract).ToList();
+			foreach (Type type in types)
+			{
+				WriteLine(type.ToString());
+			}
+
+			//ProjectUtilities.WriteElements(Project, Project.CodeModel.CodeElements, WriteLine);
 
 			switch (diffMode)
 			{
@@ -82,34 +94,16 @@ namespace MFiles.EntityFramework.PowerShell
 			}
 		}
 
-		private void WriteElements(CodeElements elements, int level = 0)
+		private static string GetProjectExecutable(Project startupProject) //, Configuration config
 		{
-			WriteLine("Getting elements");
-			foreach (CodeElement element in elements)
-			{
-				string tabs = "";
-				for (int i = 0; i < level; ++i)
-				{
-					tabs += "\t";
-				}
-				WriteLine(string.Format("{0}{1}: {2}", tabs, element.Kind, element.Name));
-				if (element.Kind == vsCMElement.vsCMElementClass)
-				{
-					CodeClass myClass = (CodeClass)element;
-					// do stuff with that class here
-					WriteLine(tabs+"Class: "+myClass.FullName);
-				}
-				if (element.Kind == vsCMElement.vsCMElementNamespace)
-				{
-					bool myProject = element.Name == Project.Name;
-					
-					if(myProject == false && level == 0)
-						continue;
-					CodeNamespace cnm = (CodeNamespace)element;
-					
-					WriteElements(cnm.Members, level + 1);
-				}
-			}
+			string projectFolder = Path.GetDirectoryName(startupProject.FileName);
+			string outputPath = startupProject.GetTargetDir(); //(string)config.Properties.Item("OutputPath").Value;
+			string assemblyFileName = (string)startupProject.Properties.Item("AssemblyName").Value + ".dll";
+			return Path.Combine(new[] {
+                                      projectFolder,
+                                      outputPath,
+                                      assemblyFileName
+                                  });
 		}
 	}
 }
