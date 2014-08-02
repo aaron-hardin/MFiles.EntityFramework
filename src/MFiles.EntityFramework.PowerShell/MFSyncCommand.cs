@@ -7,6 +7,7 @@ using MFiles.EntityFramework.PowerShell.Extensions;
 using MFiles.EntityFramework.PowerShell.Models;
 using MFiles.EntityFramework.PowerShell.Utilities;
 using MFiles.TestSuite;
+using MFiles.VaultJsonTools;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell
