@@ -47,5 +47,10 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 
 			return ret;
 		}
+
+		public static string Escape(this string str)
+		{
+			return "\"" + str + "\"";
+		}
 	}
 }
