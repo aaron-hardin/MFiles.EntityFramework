@@ -42,7 +42,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			if (_force)
 				return true;
 
-			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault, _command);
+			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, Vault, _command);
 			if (pdefGenerator.Exists)
 			{
 				_command.WriteWarning(string.Format("File {0} already exists, use -Force to overwrite.", pdefGenerator.FilePath));
@@ -72,7 +72,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 				foreach (ObjectClass objectClass in objectClasses)
 				{
-					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, _vault, _command);
+					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, Vault, _command);
 					if (classGenerator.Exists)
 					{
 						_command.WriteWarning(string.Format("File {0} already exists, use -Force to overwrite.", classGenerator.FilePath));
@@ -86,7 +86,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			{
 				if (valueList.RealObjectType)
 					continue;
-				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, _vault);
+				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, Vault);
 
 				if (vlGenerator.Exists)
 				{
@@ -104,7 +104,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 			CreateBaseObjType();
 
-			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault, _command);
+			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, Vault, _command);
 			_command.WriteLine(string.Format("Adding {0} to project.", pdefGenerator.FilePath));
 			_project.AddFile(pdefGenerator.FilePath, pdefGenerator.GenerateCode());
 
@@ -122,7 +122,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 				foreach (ObjectClass objectClass in objectClasses)
 				{
-					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, _vault, _command);
+					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, Vault, _command);
 
 					_command.WriteLine(string.Format("Adding {0} to project.", classGenerator.FilePath));
 
@@ -137,7 +137,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			{
 				if(valueList.RealObjectType)
 					continue;
-				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, _vault);
+				ValueListGenerator vlGenerator = new ValueListGenerator(valueList, _project, Vault);
 
 				_command.WriteLine(string.Format("Adding {0} to project.", vlGenerator.FilePath));
 
