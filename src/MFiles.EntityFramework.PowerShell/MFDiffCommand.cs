@@ -107,7 +107,7 @@ namespace MFiles.EntityFramework.PowerShell
 					List<xObjectClassAdmin> classAdmins =
 						Newtonsoft.Json.JsonConvert.DeserializeObject<List<xObjectClassAdmin>>(vJson.Classes);
 					List<string> resolveProperties = new List<string> {"ID"};
-					List<string> compareProperties = new List<string> {"Name"};
+					List<string> compareProperties = new List<string> {"Name", "SemanticAliases", "Workflow"};
 					List<VaultDiff<xObjectClassAdmin>> diffs = VaultDiff<xObjectClassAdmin>.GetDiffs(classAdmins, classes,
 						resolveProperties, compareProperties);
 					WriteLine("DiffCount: "+diffs.Count);
