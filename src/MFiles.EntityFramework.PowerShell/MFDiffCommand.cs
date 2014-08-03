@@ -32,7 +32,7 @@ namespace MFiles.EntityFramework.PowerShell
 			DiffMode diffMode = (DiffMode) mode;
 
 			VaultConnectionSettings connectionSettings = null;
-			string jsonPath = Path.Combine("Models", "Vault.json");
+			string jsonPath = Path.Combine(Project.GetProjectDir(), "Models", "Vault.json");
 
 			if (diffMode == DiffMode.ServerAndLocal || diffMode == DiffMode.ServerAndModels)
 			{
