@@ -20,7 +20,9 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("NamePropertyDef", new CodePrimitiveExpression(objClassAdmin.NamePropertyDef)));
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("ObjectType", new CodePrimitiveExpression(objClassAdmin.ObjectType)));
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Predefined", new CodePrimitiveExpression(objClassAdmin.Predefined)));
-			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("SemanticAliases", new CodePrimitiveExpression(objClassAdmin.SemanticAliases.Value.Split(';').ToArray())));
+			string[] aliases = objClassAdmin.SemanticAliases.Value.Split(';').ToArray();
+			CodeExpression[] exprs = aliases.Select(s => new CodePrimitiveExpression(s)).ToArray<CodeExpression>();
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("SemanticAliases", new CodeArrayCreateExpression(typeof(string), exprs)));
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Workflow", new CodePrimitiveExpression(objClassAdmin.Workflow)));
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 		}
