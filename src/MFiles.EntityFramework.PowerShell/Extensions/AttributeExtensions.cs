@@ -28,7 +28,7 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			if (apd != null)
 			{
 				codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required",
-					new CodeArgumentReferenceExpression(apd.Required.ToString())));
+					new CodeArgumentReferenceExpression(apd.Required.ToString().ToLower())));
 			}
 			targetProperty.CustomAttributes.Add(codeAttrDecl);
 		}
@@ -41,6 +41,37 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			};
 
 			return objClass;
+		}
+
+		public static xObjTypeAdmin AttributeToComModel(this MetaStructureObjectTypeAttribute attribute)
+		{
+			xObjTypeAdmin objType = new xObjTypeAdmin
+			{
+				
+			};
+
+			objType.ObjectType = new xObjType
+			{
+				NamePlural = attribute.NamePlural,
+				NameSingular = attribute.NameSingular
+			};
+
+			return objType;
+		}
+
+		public static xPropertyDefAdmin AttributeToComModel(this MetaStructurePropertyAttribute attribute)
+		{
+			xPropertyDefAdmin prop = new xPropertyDefAdmin
+			{
+				
+			};
+
+			prop.PropertyDef = new xPropertyDef
+			{
+				Name = attribute.Name
+			};
+
+			return prop;
 		}
 	}
 }
