@@ -28,6 +28,22 @@ namespace MFiles.EntityFramework.Design
 	}
 
 	/// <summary>
+	/// Allows parameters to be given information for generating as structure.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+	public class MetaStructureAssociatedPropertyAttribute : Attribute
+	{
+		public int PropertyDef { get; set; }
+		public bool Required { get; set; }
+
+		public MetaStructureAssociatedPropertyAttribute()
+		{
+			PropertyDef = -1;
+			Required = false;
+		}
+	}
+
+	/// <summary>
 	/// Allows classes to be given information for generating as structure.
 	/// </summary>
 	[AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]

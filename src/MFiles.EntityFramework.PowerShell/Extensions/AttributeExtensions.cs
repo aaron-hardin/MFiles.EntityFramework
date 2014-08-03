@@ -1,4 +1,7 @@
-﻿using System.CodeDom;
+﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Reflection;
 using MFiles.EntityFramework.Design;
 using MFiles.VaultJsonTools.ComModels;
 using MFilesAPI;
@@ -22,15 +25,33 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 		}
 
-		public static void AddAsAttribute(this PropertyDefAdmin pda, CodeMemberProperty targetProperty, AssociatedPropertyDef apd = null)
+		public static void AddAsAttribute(this AssociatedPropertyDef apd, CodeMemberProperty targetProperty)
 		{
-			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureProperty");
-			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodePrimitiveExpression(pda.PropertyDef.Name)));
-			if (apd != null)
-			{
-				codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodePrimitiveExpression(apd.Required)));
-			}
+			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureAssociatedProperty");
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("PropertyDef", new CodePrimitiveExpression(apd.PropertyDef)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodePrimitiveExpression(apd.Required)));
+			
 			targetProperty.CustomAttributes.Add(codeAttrDecl);
+		}
+
+		public static xObjectClassAdmin AttributeToComModel(this Type type)
+		{
+			MetaStructureClassAttribute attr = type.GetCustomAttribute<MetaStructureClassAttribute>();
+			xObjectClassAdmin metaClass = attr.AttributeToComModel();
+
+			List<xAssociatedPropertyDef> associatedProperties = new List<xAssociatedPropertyDef>();
+
+			PropertyInfo[] properties = type.GetProperties();
+			foreach (PropertyInfo property in properties)
+			{
+				MetaStructureAssociatedPropertyAttribute propAttr =
+					property.GetCustomAttribute<MetaStructureAssociatedPropertyAttribute>();
+				associatedProperties.Add(propAttr.AttributeToComModel());
+			}
+
+			metaClass.AssociatedPropertyDefs = associatedProperties.ToArray();
+
+			return metaClass;
 		}
 
 		public static xObjectClassAdmin AttributeToComModel(this MetaStructureClassAttribute attribute)
@@ -41,6 +62,16 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			};
 
 			return objClass;
+		}
+
+		public static xAssociatedPropertyDef AttributeToComModel(this MetaStructureAssociatedPropertyAttribute attribute)
+		{
+			xAssociatedPropertyDef prop = new xAssociatedPropertyDef
+			{
+				PropertyDef = attribute.PropertyDef,
+				Required = attribute.Required
+			};
+			return prop;
 		}
 
 		public static xObjTypeAdmin AttributeToComModel(this MetaStructureObjectTypeAttribute attribute)

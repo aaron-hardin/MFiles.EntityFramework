@@ -116,7 +116,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				};
 				property.Comments.Add(new CodeCommentStatement(string.Format("Binding property for {0}.", pdefAdmin.PropertyDef.Name)));
 
-				pdefAdmin.AddAsAttribute(property, associatedPropertyDef);
+				associatedPropertyDef.AddAsAttribute(property);
 
 				string getParam = pdefAdmin.PropertyDef.GUID;
 				if (!string.IsNullOrWhiteSpace(pdefAdmin.SemanticAliases.Value))
