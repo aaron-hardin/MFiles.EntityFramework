@@ -17,12 +17,14 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 		private readonly Project _project;
 		private readonly ObjType _objType;
 		private readonly ObjectClass _objectClass;
+		private readonly ObjectClassAdmin _objectClassAdmin;
 		private readonly Vault _vault;
 		private readonly MigrationsDomainCommand _command;
 
-		public ObjectClassGenerator(ObjectClass objectClass, ObjType objType, Project project, Vault vault, MigrationsDomainCommand command)
+		public ObjectClassGenerator(ObjectClassAdmin objectClassAdmin, ObjectClass objectClass, ObjType objType, Project project, Vault vault, MigrationsDomainCommand command)
 		{
 			_objectClass = objectClass;
+			_objectClassAdmin = objectClassAdmin;
 			_objType = objType;
 			_project = project;
 			_vault = vault;
@@ -61,10 +63,10 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			if (!emptyPartial)
 			{
 				// Declare a new generated code attribute
-				CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
-				CodeAttributeArgument argument = new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(_objectClass.Name.Escape()));
-				codeAttrDecl.Arguments.Add(argument);
-				targetClass.CustomAttributes.Add(codeAttrDecl);
+				//CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
+				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(_objectClass.Name.Escape())));
+				//targetClass.CustomAttributes.Add(codeAttrDecl);
+				_objectClassAdmin.AddAsAttribute(_objectClass, targetClass);
 
 				AddProperties(targetClass);
 				Common.AddConstructors(targetClass);
@@ -113,6 +115,12 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 					Name = pdefAdmin.PropertyDef.Name.CleanName()
 				};
 				property.Comments.Add(new CodeCommentStatement(string.Format("Binding property for {0}.", pdefAdmin.PropertyDef.Name)));
+
+				pdefAdmin.AddAsAttribute(property, associatedPropertyDef);
+				//CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureProperty");
+				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(pdefAdmin.PropertyDef.Name.Escape())));
+				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodeArgumentReferenceExpression(associatedPropertyDef.Required.ToString())));
+				//property.CustomAttributes.Add(codeAttrDecl);
 
 				string getParam = pdefAdmin.PropertyDef.GUID;
 				if (!string.IsNullOrWhiteSpace(pdefAdmin.SemanticAliases.Value))

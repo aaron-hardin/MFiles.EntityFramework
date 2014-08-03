@@ -74,4 +74,20 @@ namespace MFiles.EntityFramework.Design
 
 		}
 	}
+
+	/// <summary>
+	/// Allows parameters to be given information for generating as structure.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+	public class MetaStructureObjectTypeAttribute : Attribute
+	{
+		public string NameSingular { get; set; }
+		public string NamePlural { get; set; }
+		
+		public MetaStructureObjectTypeAttribute()
+		{
+			NameSingular = "";
+			NamePlural = "";
+		}
+	}
 }

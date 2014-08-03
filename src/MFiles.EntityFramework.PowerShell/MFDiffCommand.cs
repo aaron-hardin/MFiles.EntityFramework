@@ -71,11 +71,8 @@ namespace MFiles.EntityFramework.PowerShell
 						className = type.ToString().Split('.').Last();
 					}
 					WriteLine("\tName: " + className);
-					
-					xObjectClassAdmin metaClass = new xObjectClassAdmin
-					{
-						Name = className
-					};
+
+					xObjectClassAdmin metaClass = attr.AttributeToComModel();
 					classes.Add(metaClass);
 				}
 			}

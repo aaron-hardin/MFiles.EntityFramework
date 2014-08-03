@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using EnvDTE;
 using MFiles.EntityFramework.PowerShell.Extensions;
@@ -69,10 +68,13 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				}
 
 				ObjectClasses objectClasses = Vault.ClassOperations.GetObjectClasses(objType.ID);
+				ObjectClassesAdmin objectClassesAdmin = Vault.ClassOperations.GetObjectClassesAdmin(objType.ID);
 
 				foreach (ObjectClass objectClass in objectClasses)
 				{
-					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, Vault, _command);
+					ObjectClassAdmin oca = objectClassesAdmin.Cast<ObjectClassAdmin>().FirstOrDefault(objectClassAdmin => objectClassAdmin.ID == objectClass.ID);
+
+					ObjectClassGenerator classGenerator = new ObjectClassGenerator(oca, objectClass, objType, _project, Vault, _command);
 					if (classGenerator.Exists)
 					{
 						_command.WriteWarning(string.Format("File {0} already exists, use -Force to overwrite.", classGenerator.FilePath));
@@ -119,10 +121,13 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				_project.AddFile(otGenerator.FilePath, otGenerator.GenerateObjTypeCode());
 
 				ObjectClasses objectClasses = Vault.ClassOperations.GetObjectClasses(objType.ID);
+				ObjectClassesAdmin objectClassesAdmin = Vault.ClassOperations.GetObjectClassesAdmin(objType.ID);
 
 				foreach (ObjectClass objectClass in objectClasses)
 				{
-					ObjectClassGenerator classGenerator = new ObjectClassGenerator(objectClass, objType, _project, Vault, _command);
+					ObjectClassAdmin oca = objectClassesAdmin.Cast<ObjectClassAdmin>().FirstOrDefault(objectClassAdmin => objectClassAdmin.ID == objectClass.ID);
+
+					ObjectClassGenerator classGenerator = new ObjectClassGenerator(oca, objectClass, objType, _project, Vault, _command);
 
 					_command.WriteLine(string.Format("Adding {0} to project.", classGenerator.FilePath));
 
