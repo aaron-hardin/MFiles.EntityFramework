@@ -102,6 +102,15 @@ namespace MFiles.EntityFramework.PowerShell
 					WriteWarning("Functionality not completed.");
 					break;
 				case DiffMode.LocalAndModels:
+					string localJsonDiff = File.ReadAllText(jsonPath);
+					VaultJSON vJson = Newtonsoft.Json.JsonConvert.DeserializeObject<VaultJSON>(localJsonDiff);
+					List<xObjectClassAdmin> classAdmins =
+						Newtonsoft.Json.JsonConvert.DeserializeObject<List<xObjectClassAdmin>>(vJson.Classes);
+					List<string> resolveProperties = new List<string> {"ID"};
+					List<string> compareProperties = new List<string> {"Name"};
+					List<VaultDiff<xObjectClassAdmin>> diffs = VaultDiff<xObjectClassAdmin>.GetDiffs(classAdmins, classes,
+						resolveProperties, compareProperties);
+					WriteLine("DiffCount: "+diffs.Count);
 					WriteWarning("Functionality not completed.");
 					break;
 				default:

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using MFiles.EntityFramework.Design;
 using MFiles.VaultJsonTools.ComModels;
@@ -10,10 +11,17 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 {
 	public static class AttributeExtensions
 	{
-		public static void AddAsAttribute(this ObjectClassAdmin objClassAdmin, ObjectClass objClass, CodeTypeDeclaration targetClass)
+		public static void AddAsAttribute(this CodeTypeDeclaration targetClass, ObjectClassAdmin objClassAdmin, ObjectClass objClass)
 		{
 			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodePrimitiveExpression(objClassAdmin.Name)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("ForceWorkflow", new CodePrimitiveExpression(objClassAdmin.ForceWorkflow)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("ID", new CodePrimitiveExpression(objClassAdmin.ID)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("NamePropertyDef", new CodePrimitiveExpression(objClassAdmin.NamePropertyDef)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("ObjectType", new CodePrimitiveExpression(objClassAdmin.ObjectType)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Predefined", new CodePrimitiveExpression(objClassAdmin.Predefined)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("SemanticAliases", new CodePrimitiveExpression(objClassAdmin.SemanticAliases.Value.Split(';').ToArray())));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Workflow", new CodePrimitiveExpression(objClassAdmin.Workflow)));
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 		}
 
@@ -58,7 +66,14 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 		{
 			xObjectClassAdmin objClass = new xObjectClassAdmin
 			{
-				Name = attribute.Name
+				Name = attribute.Name,
+				ForceWorkflow = attribute.ForceWorkflow,
+				ID = attribute.ID,
+				NamePropertyDef = attribute.NamePropertyDef,
+				ObjectType = attribute.ObjectType,
+				Predefined = attribute.Predefined,
+				SemanticAliases = attribute.SemanticAliases,
+				Workflow = attribute.Workflow
 			};
 
 			return objClass;

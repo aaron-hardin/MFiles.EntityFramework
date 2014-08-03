@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using MFilesAPI;
 
 namespace MFiles.EntityFramework.Design
@@ -51,43 +49,21 @@ namespace MFiles.EntityFramework.Design
 	{
 		public string Identifier { get; set; }
 		public string Name { get; set; }
-		public bool TopLevelClass { get; set; }
-		public string NamingConvention { get; set; }
-		public string ClassAlias { get; set; }
-		public string ObjTypeAlias { get; set; }
-		public bool ShowInTaskPane { get; set; }
-	    public bool CanHaveFiles { get; set; }
+
+		public bool ForceWorkflow { get; set; }
+		public int ID { get; set; }
+		public int NamePropertyDef { get; set; }
+		public int ObjectType { get; set; }
+		public bool Predefined { get; set; }
+		public string[] SemanticAliases { get; set; }
+		public int Workflow { get; set; }
 
 		public MetaStructureClassAttribute()
 		{
-			Identifier = "";
+			Identifier = "ID";
 			Name = "";
-			TopLevelClass = false;
-			NamingConvention = "";
-			ClassAlias = "";
-			ObjTypeAlias = "";
-			ShowInTaskPane = false;
-		    CanHaveFiles = false;
-		}
-
-		public string ExpandNamingConvention(Vault vault)
-		{
-			string expandedText = NamingConvention;
-
-			// Loop over any property placeholders found.
-			MatchCollection matches = Regex.Matches( NamingConvention,
-				@"%%(.+?)%%", RegexOptions.IgnoreCase );
-			foreach( Match match in matches )
-			{
-				string subName = match.Groups[ 0 ].Value.Substring( 2, match.Groups[ 0 ].Length - 4 );
-				string namingAlias = VaultHelpers.GetPropertyDefAliasWithDataType( subName, MFDataType.MFDatatypeLookup );
-				int namingPropId = vault.PropertyDefOperations.GetPropertyDefIDByAlias( namingAlias );
-
-				expandedText = expandedText.Replace( match.Groups[ 0 ].Value, namingPropId.ToString( CultureInfo.InvariantCulture ) );
-			}
-
-			return expandedText;
-
+			ID = -1;
+			NamePropertyDef = 0;
 		}
 	}
 
@@ -97,11 +73,14 @@ namespace MFiles.EntityFramework.Design
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public class MetaStructureObjectTypeAttribute : Attribute
 	{
+		public string Identifier { get; set; }
+
 		public string NameSingular { get; set; }
 		public string NamePlural { get; set; }
 		
 		public MetaStructureObjectTypeAttribute()
 		{
+			Identifier = "ObjectType.Guid";
 			NameSingular = "";
 			NamePlural = "";
 		}

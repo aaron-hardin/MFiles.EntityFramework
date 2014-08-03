@@ -62,11 +62,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 			if (!emptyPartial)
 			{
-				// Declare a new generated code attribute
-				//CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
-				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(_objectClass.Name.Escape())));
-				//targetClass.CustomAttributes.Add(codeAttrDecl);
-				_objectClassAdmin.AddAsAttribute(_objectClass, targetClass);
+				targetClass.AddAsAttribute(_objectClassAdmin, _objectClass);
 
 				AddProperties(targetClass);
 				Common.AddConstructors(targetClass);
