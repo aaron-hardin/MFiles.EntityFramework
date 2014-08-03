@@ -10,21 +10,22 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 		public static void AddAsAttribute(this ObjectClassAdmin objClassAdmin, ObjectClass objClass, CodeTypeDeclaration targetClass)
 		{
 			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureClass");
-			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(objClassAdmin.Name.Escape())));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodePrimitiveExpression(objClassAdmin.Name)));
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 		}
 
 		public static void AddAsAttribute(this ObjTypeAdmin ota, CodeTypeDeclaration targetClass)
 		{
 			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureObjectType");
-			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(ota.ObjectType.NameSingular.Escape())));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("NameSingular", new CodePrimitiveExpression(ota.ObjectType.NameSingular)));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("NamePlural", new CodePrimitiveExpression(ota.ObjectType.NamePlural)));
 			targetClass.CustomAttributes.Add(codeAttrDecl);
 		}
 
 		public static void AddAsAttribute(this PropertyDefAdmin pda, CodeMemberProperty targetProperty, AssociatedPropertyDef apd = null)
 		{
 			CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureProperty");
-			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(pda.PropertyDef.Name.Escape())));
+			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodePrimitiveExpression(pda.PropertyDef.Name)));
 			if (apd != null)
 			{
 				codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodePrimitiveExpression(apd.Required)));
