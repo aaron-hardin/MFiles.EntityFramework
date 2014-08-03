@@ -117,10 +117,6 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				property.Comments.Add(new CodeCommentStatement(string.Format("Binding property for {0}.", pdefAdmin.PropertyDef.Name)));
 
 				pdefAdmin.AddAsAttribute(property, associatedPropertyDef);
-				//CodeAttributeDeclaration codeAttrDecl = new CodeAttributeDeclaration("MetaStructureProperty");
-				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(pdefAdmin.PropertyDef.Name.Escape())));
-				//codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodeArgumentReferenceExpression(associatedPropertyDef.Required.ToString())));
-				//property.CustomAttributes.Add(codeAttrDecl);
 
 				string getParam = pdefAdmin.PropertyDef.GUID;
 				if (!string.IsNullOrWhiteSpace(pdefAdmin.SemanticAliases.Value))

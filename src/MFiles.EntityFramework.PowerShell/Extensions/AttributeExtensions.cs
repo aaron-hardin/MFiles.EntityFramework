@@ -27,8 +27,7 @@ namespace MFiles.EntityFramework.PowerShell.Extensions
 			codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Name", new CodeArgumentReferenceExpression(pda.PropertyDef.Name.Escape())));
 			if (apd != null)
 			{
-				codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required",
-					new CodeArgumentReferenceExpression(apd.Required.ToString().ToLower())));
+				codeAttrDecl.Arguments.Add(new CodeAttributeArgument("Required", new CodePrimitiveExpression(apd.Required)));
 			}
 			targetProperty.CustomAttributes.Add(codeAttrDecl);
 		}
