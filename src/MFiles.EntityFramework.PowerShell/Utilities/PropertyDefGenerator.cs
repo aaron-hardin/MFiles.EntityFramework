@@ -10,15 +10,17 @@ using MFilesAPI;
 
 namespace MFiles.EntityFramework.PowerShell.Utilities
 {
-	public class PropertyDefGenerator : IGenerator
+	internal class PropertyDefGenerator : IGenerator
 	{
 		private Project _project;
 		private readonly Vault _vault;
+		private readonly MigrationsDomainCommand _command;
 
-		public PropertyDefGenerator(Project project, Vault vault)
+		public PropertyDefGenerator(Project project, Vault vault, MigrationsDomainCommand command)
 		{
 			_project = project;
 			_vault = vault;
+			_command = command;
 		}
 
 		public bool Exists
@@ -43,11 +45,15 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 		public string GenerateCode(bool partial = false)
 		{
+			_command.WriteVerbose("Generating code");
+
 			CodeTypeDeclaration targetClass = new CodeTypeDeclaration("PropertyDefinitions")
 			{
 				IsEnum = true,
 				TypeAttributes = TypeAttributes.Public | TypeAttributes.Abstract
 			};
+
+			_command.WriteVerbose("Getting properties");
 
 			PropertyDefsAdmin props = _vault.PropertyDefOperations.GetPropertyDefsAdmin();
 			foreach (PropertyDefAdmin prop in props)
@@ -61,8 +67,12 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 				targetClass.Members.Add(f);
 			}
 
+			_command.WriteVerbose("Creating Namespace");
+
 			System.CodeDom.CodeNamespace targetNamespace = new System.CodeDom.CodeNamespace(_project.GetModelNamespace());
 			targetNamespace.Types.Add(targetClass);
+
+			_command.WriteVerbose("Building string");
 
 			StringBuilder sbCode = new StringBuilder();
 			using (StringWriter sw = new StringWriter(sbCode))

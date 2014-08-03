@@ -42,7 +42,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 			if (_force)
 				return true;
 
-			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault);
+			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault, _command);
 			if (pdefGenerator.Exists)
 			{
 				_command.WriteWarning(string.Format("File {0} already exists, use -Force to overwrite.", pdefGenerator.FilePath));
@@ -104,7 +104,7 @@ namespace MFiles.EntityFramework.PowerShell.Utilities
 
 			CreateBaseObjType();
 
-			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault);
+			PropertyDefGenerator pdefGenerator = new PropertyDefGenerator(_project, _vault, _command);
 			_command.WriteLine(string.Format("Adding {0} to project.", pdefGenerator.FilePath));
 			_project.AddFile(pdefGenerator.FilePath, pdefGenerator.GenerateCode());
 
