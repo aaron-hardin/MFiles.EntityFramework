@@ -215,3 +215,4 @@ $RECYCLE.BIN/
 Packaging/tools/MFiles.EntityFramework.PowerShell.dll
 Packaging/lib/net45/MFiles.EntityFramework.dll
 Packaging/tools/MFiles.EntityFramework.PowerShell.Helper.dll
+*.sln.ide
