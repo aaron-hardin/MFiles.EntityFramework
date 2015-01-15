@@ -37,10 +37,11 @@
     </Reference>
     <Reference Include="MFiles.TestSuite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MFiles.TestSuite.1.1.1\lib\net45\MFiles.TestSuite.dll</HintPath>
+      <HintPath>..\packages\MFiles.TestSuite.2.0.1\lib\net45\MFiles.TestSuite.dll</HintPath>
     </Reference>
-    <Reference Include="MFiles.VaultJsonTools">
-      <HintPath>..\packages\MFiles.VaultJsonTools.1.1.7\lib\net45\MFiles.VaultJsonTools.dll</HintPath>
+    <Reference Include="MFiles.VaultJsonTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MFiles.VaultJsonTools.2.0.3\lib\net45\MFiles.VaultJsonTools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -97,7 +98,9 @@
     <Compile Include="Utilities\ObjVerExGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MFiles.EntityFramework.Helper\MFiles.EntityFramework.Helper.csproj">
